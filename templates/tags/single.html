@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="tag-page">
+  <header class="page-header">
+    <a href="{{ get_url(path='tags') }}" class="back-link">&larr; Todos los tags</a>
+    <h1 class="page-title">Tag: <span class="tag-name">{{ term.name }}</span></h1>
+    <p class="page-description">{{ term.pages | length }} posts encontrados.</p>
+  </header>
+
+  <div class="post-list">
+    {% for post in term.pages %}
+    <article class="post-card">
+      <div class="post-card-meta">
+        <time datetime="{{ post.date | date(format='%Y-%m-%d') }}" class="post-date">
+          {{ post.date | date(format="%d %b %Y") }}
+        </time>
+      </div>
+      <h2 class="post-card-title">
+        <a href="{{ post.permalink }}">{{ post.title }}</a>
+      </h2>
+      {% if post.description %}
+      <p class="post-card-excerpt">{{ post.description }}</p>
+      {% endif %}
+      <a href="{{ post.permalink }}" class="read-more">Leer más &rarr;</a>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

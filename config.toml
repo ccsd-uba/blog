@@ -26,10 +26,6 @@ url = "tags"
 feed = true
 
 [extra]
-# Nombre del blog
-blog_name = "Centro de Criptografía y Sistemas Distribuidos"
-blog_tagline = "Artículos sobre criptografía, sistemas distribuidos. Publicaciones de investigación, tutoriales y noticias del Centro."
-
 # Redes sociales (opcional, dejar vacío para no mostrar)
 github = ""
 twitter = ""
@@ -40,3 +36,68 @@ posts_per_page = 10
 
 # Mostrar tiempo de lectura estimado
 show_reading_time = true
+
+# Translations (español - default)
+[translations]
+blog_name = "Centro de Criptografía y Sistemas Distribuidos"
+blog_tagline = "Artículos sobre criptografía, sistemas distribuidos. Publicaciones de investigación, tutoriales y noticias del Centro."
+nav_home = "Inicio"
+nav_blog = "Blog"
+nav_about = "Sobre mí"
+recent_posts = "Posts recientes"
+read_more = "Leer más"
+view_all_posts = "Ver todos los posts"
+no_posts = "Todavía no hay posts publicados. ¡Pronto habrá contenido!"
+no_posts_yet = "Todavía no hay posts. ¡Volvé pronto!"
+made_with = "Hecho con"
+min_read = "min de lectura"
+prev_post = "Post anterior"
+next_post = "Post siguiente"
+toc_title = "Contenidos"
+all_tags = "Todos los tags"
+all_topics = "Todos los temas del blog"
+posts_found = "posts encontrados"
+page_not_found = "Página no encontrada"
+page_not_found_msg = "La página que estás buscando no existe o fue movida."
+back_to_home = "Volver al inicio"
+newer_posts = "Más recientes"
+older_posts = "Más antiguos"
+page_label = "Página"
+of_label = "de"
+tags_label = "Tags:"
+
+# English
+[languages.en]
+title = "Center for Cryptography and Distributed Systems - UBA"
+description = "Center for Cryptography and Distributed Systems."
+generate_feeds = true
+feed_filenames = ["atom.xml"]
+taxonomies = [{name = "tags", url = "tags", feed = true}]
+
+[languages.en.translations]
+blog_name = "Center for Cryptography and Distributed Systems"
+blog_tagline = "Articles on cryptography and distributed systems. Research publications, tutorials, and news from the Center."
+nav_home = "Home"
+nav_blog = "Blog"
+nav_about = "About"
+recent_posts = "Recent posts"
+read_more = "Read more"
+view_all_posts = "View all posts"
+no_posts = "No posts published yet. Stay tuned!"
+no_posts_yet = "No posts yet. Check back soon!"
+made_with = "Made with"
+min_read = "min read"
+prev_post = "Previous post"
+next_post = "Next post"
+toc_title = "Contents"
+all_tags = "All tags"
+all_topics = "All blog topics"
+posts_found = "posts found"
+page_not_found = "Page not found"
+page_not_found_msg = "The page you're looking for doesn't exist or has been moved."
+back_to_home = "Back to home"
+newer_posts = "Newer"
+older_posts = "Older"
+page_label = "Page"
+of_label = "of"
+tags_label = "Tags:"

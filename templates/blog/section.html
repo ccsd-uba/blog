@@ -24,12 +24,12 @@
           {{ post.date | date(format="%d %b %Y") }}
         </time>
         {% if config.extra.show_reading_time %}
-        <span class="reading-time">· {{ post.reading_time }} min de lectura</span>
+        <span class="reading-time">&middot; {{ post.reading_time }} {{ trans(key="min_read", lang=lang) }}</span>
         {% endif %}
         {% if post.taxonomies.tags %}
         <div class="post-tags">
           {% for tag in post.taxonomies.tags %}
-          <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag, lang=lang) }}" class="tag">{{ tag }}</a>
           {% endfor %}
         </div>
         {% endif %}
@@ -42,28 +42,27 @@
       {% elif post.summary %}
       <p class="post-card-excerpt">{{ post.summary | truncate(length=250) }}</p>
       {% endif %}
-      <a href="{{ post.permalink }}" class="read-more">Leer más &rarr;</a>
+      <a href="{{ post.permalink }}" class="read-more">{{ trans(key="read_more", lang=lang) }} &rarr;</a>
     </article>
     {% endfor %}
   </div>
 
-  <!-- Paginación -->
   {% if paginator %}
-  <nav class="pagination" aria-label="Paginación">
+  <nav class="pagination" aria-label="Pagination">
     {% if paginator.previous %}
-    <a href="{{ paginator.previous }}" class="pagination-prev">&larr; Más recientes</a>
+    <a href="{{ paginator.previous }}" class="pagination-prev">&larr; {{ trans(key="newer_posts", lang=lang) }}</a>
     {% endif %}
     <span class="pagination-info">
-      Página {{ paginator.current_index }} de {{ paginator.number_pagers }}
+      {{ trans(key="page_label", lang=lang) }} {{ paginator.current_index }} {{ trans(key="of_label", lang=lang) }} {{ paginator.number_pagers }}
     </span>
     {% if paginator.next %}
-    <a href="{{ paginator.next }}" class="pagination-next">Más antiguos &rarr;</a>
+    <a href="{{ paginator.next }}" class="pagination-next">{{ trans(key="older_posts", lang=lang) }} &rarr;</a>
     {% endif %}
   </nav>
   {% endif %}
 
   {% else %}
-  <p class="empty-state">Todavía no hay posts. ¡Volvé pronto!</p>
+  <p class="empty-state">{{ trans(key="no_posts_yet", lang=lang) }}</p>
   {% endif %}
 </div>
 {% endblock %}

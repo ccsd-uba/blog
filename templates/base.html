@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ config.default_language }}">
+<html lang="{{ lang }}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
-    {% if page.title %}{{ page.title }} | {{ config.extra.blog_name }}
-    {% elif section.title %}{{ section.title }} | {{ config.extra.blog_name }}
-    {% else %}{{ config.extra.blog_name }}
+    {% if page.title %}{{ page.title }} | {{ trans(key="blog_name", lang=lang) }}
+    {% elif section.title %}{{ section.title }} | {{ trans(key="blog_name", lang=lang) }}
+    {% else %}{{ trans(key="blog_name", lang=lang) }}
     {% endif %}
   </title>
   <meta name="description" content="
@@ -18,7 +18,7 @@
 
   <!-- RSS Feed -->
   {% if config.generate_feeds %}
-  <link rel="alternate" type="application/atom+xml" title="{{ config.extra.blog_name }} Feed" href="{{ get_url(path=config.feed_filenames[0]) }}" />
+  <link rel="alternate" type="application/atom+xml" title="{{ trans(key="blog_name", lang=lang) }} Feed" href="{{ get_url(path=config.feed_filenames[0]) }}" />
   {% endif %}
 
   <!-- Fuentes -->
@@ -33,13 +33,19 @@
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        <a href="{{ config.base_url }}" class="site-title">
-          <span class="title-text">{{ config.extra.blog_name }}</span>
+        <a href="{% if lang == config.default_language %}/{% else %}/{{ lang }}/{% endif %}" class="site-title">
+          <span class="title-text">{{ trans(key="blog_name", lang=lang) }}</span>
         </a>
         <nav class="site-nav">
-          <a href="{{ config.base_url }}" class="nav-link">Inicio</a>
-          <a href="{{ get_url(path='blog') }}" class="nav-link">Blog</a>
-          <a href="{{ get_url(path='about') }}" class="nav-link">Sobre mí</a>
+          <a href="{% if lang == config.default_language %}/{% else %}/{{ lang }}/{% endif %}" class="nav-link">{{ trans(key="nav_home", lang=lang) }}</a>
+          <a href="{{ get_url(path='blog', lang=lang) }}" class="nav-link">{{ trans(key="nav_blog", lang=lang) }}</a>
+          <a href="{{ get_url(path='about', lang=lang) }}" class="nav-link">{{ trans(key="nav_about", lang=lang) }}</a>
+          {% set path = current_path | default(value="/") %}
+          {% if lang == "es" %}
+          <a href="/en{{ path }}" class="nav-link lang-switch">EN</a>
+          {% else %}
+          <a href="{{ path | replace(from='/en/', to='/') }}" class="nav-link lang-switch">ES</a>
+          {% endif %}
         </nav>
       </div>
     </div>
@@ -56,7 +62,7 @@
       <div class="footer-inner">
         <p class="footer-copy">
           &copy; 2026 {{ config.author }} &mdash;
-          Hecho con <a href="https://www.getzola.org" target="_blank" rel="noopener">Zola</a>
+          {{ trans(key="made_with", lang=lang) }} <a href="https://www.getzola.org" target="_blank" rel="noopener">Zola</a>
         </p>
         <div class="footer-links">
           {% if config.extra.github %}

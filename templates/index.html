@@ -4,16 +4,16 @@
 <!-- Hero section -->
 <section class="hero">
   <div class="hero-inner">
-    <h1 class="hero-title">{{ config.extra.blog_name }}</h1>
-    <p class="hero-tagline">{{ config.extra.blog_tagline }}</p>
+    <h1 class="hero-title">{{ trans(key="blog_name", lang=lang) }}</h1>
+    <p class="hero-tagline">{{ trans(key="blog_tagline", lang=lang) }}</p>
   </div>
 </section>
 
 <!-- Posts recientes -->
 <section class="recent-posts">
-  <h2 class="section-title">Posts recientes</h2>
+  <h2 class="section-title">{{ trans(key="recent_posts", lang=lang) }}</h2>
 
-  {% set blog_section = get_section(path="blog/_index.md") %}
+  {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
   {% set posts = blog_section.pages | slice(end=5) %}
 
   {% if posts %}
@@ -25,12 +25,12 @@
           {{ post.date | date(format="%d %b %Y") }}
         </time>
         {% if config.extra.show_reading_time %}
-        <span class="reading-time">· {{ post.reading_time }} min de lectura</span>
+        <span class="reading-time">&middot; {{ post.reading_time }} {{ trans(key="min_read", lang=lang) }}</span>
         {% endif %}
         {% if post.taxonomies.tags %}
         <div class="post-tags">
           {% for tag in post.taxonomies.tags %}
-          <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag, lang=lang) }}" class="tag">{{ tag }}</a>
           {% endfor %}
         </div>
         {% endif %}
@@ -43,16 +43,16 @@
       {% elif post.summary %}
       <p class="post-card-excerpt">{{ post.summary | truncate(length=200) }}</p>
       {% endif %}
-      <a href="{{ post.permalink }}" class="read-more">Leer más &rarr;</a>
+      <a href="{{ post.permalink }}" class="read-more">{{ trans(key="read_more", lang=lang) }} &rarr;</a>
     </article>
     {% endfor %}
   </div>
 
   <div class="view-all">
-    <a href="{{ get_url(path='blog') }}" class="btn-secondary">Ver todos los posts</a>
+    <a href="{{ get_url(path='blog', lang=lang) }}" class="btn-secondary">{{ trans(key="view_all_posts", lang=lang) }}</a>
   </div>
   {% else %}
-  <p class="empty-state">Todavía no hay posts publicados. ¡Pronto habrá contenido!</p>
+  <p class="empty-state">{{ trans(key="no_posts", lang=lang) }}</p>
   {% endif %}
 </section>
 {% endblock %}

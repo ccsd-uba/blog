@@ -3,8 +3,8 @@
 {% block content %}
 <div class="error-page">
   <div class="error-code">404</div>
-  <h1 class="error-title">Página no encontrada</h1>
-  <p class="error-message">La página que estás buscando no existe o fue movida.</p>
-  <a href="{{ config.base_url }}" class="btn-primary">Volver al inicio</a>
+  <h1 class="error-title">{{ trans(key="page_not_found", lang=lang) }}</h1>
+  <p class="error-message">{{ trans(key="page_not_found_msg", lang=lang) }}</p>
+  <a href="{% if lang == config.default_language %}/{% else %}/{{ lang }}/{% endif %}" class="btn-primary">{{ trans(key="back_to_home", lang=lang) }}</a>
 </div>
 {% endblock %}

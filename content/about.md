@@ -1,24 +1,22 @@
 +++
-title = "Sobre mí"
-description = "Quién soy y de qué trata este blog."
+title = "Sobre el CCSD"
+description = "Qué es el Centro de Criptografía y Sistemas Distribuidos de la UBA."
 +++
 
-¡Hola! Soy **Bren**, desarrolladora de software con interés en sistemas, Rust, y herramientas de desarrollo.
+## Objeto
 
-## Este blog
+El Centro de Criptografía y Sistemas Distribuidos de la UBA tiene por objeto el estudio de áreas de tecnología e informática vinculadas a la criptografía, los sistemas distribuidos, compiladores y programación de sistemas (*system programming*), generando nuevo acervo de conocimiento para la academia, la vinculación tecnológica y la producción de insumos que tiendan a la innovación científica y tecnológica.
 
-Escribo sobre las cosas que aprendo en el camino: lenguajes de programación, arquitectura de sistemas, herramientas que encuentro útiles, y ocasionalmente proyectos propios.
+## Funciones
 
-## Tecnologías que uso seguido
-
-- **Rust** para sistemas y CLIs
-- **Python** para scripting y data
-- **Linux** como entorno principal
-- **Git** (obvio)
+1. Realizar estudios sobre criptografía, programación concurrente, sistemas distribuidos y compiladores y temas vinculados.
+2. Publicitar resultados y hallazgos, a través de publicaciones, eventos y conferencias en razón de su competencia.
+3. Promover la vinculación y transferencia tecnológica, así como también, el asesoramiento de las áreas específicas en todos sus ámbitos de aplicación posibles (empresas privadas, organismos públicos, etc.).
+4. Desarrollar material didáctico y realizar tareas de enseñanza tanto en ámbitos públicos como privados.
 
 ## Contacto
 
-Si querés charlar sobre algún tema del blog o colaborar en algo, podés encontrarme en GitHub o enviarme un mail.
+Si querés saber más sobre el centro o colaborar en algún proyecto, podés encontrarnos en [GitHub](https://github.com/ccsd-uba) o enviarnos un mail.
 
 ---
 

@@ -1,58 +1,835 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCSD — Centro de Criptografía y Sistemas Distribuidos | UBA</title>
 
-{% block content %}
-<!-- Hero section -->
-<section class="hero">
-  <div class="hero-inner">
-    <img src="/images/ccsd-logo.png" alt="CCSD Logo" class="hero-logo">
-    <p class="hero-tagline">{{ trans(key="blog_tagline", lang=lang) }}</p>
+  <!-- SEO -->
+  <meta name="description" content="El Centro de Criptografía y Sistemas Distribuidos (CCSD) de la Universidad de Buenos Aires investiga y desarrolla tecnologías criptográficas para garantizar la confidencialidad, integridad y autenticidad de la información en sectores estratégicos." />
+  <meta name="keywords" content="criptografía, sistemas distribuidos, seguridad digital, blockchain, criptografía post-cuántica, zero-knowledge proofs, UBA, Buenos Aires, investigación, cifrado, privacidad" />
+  <meta name="author" content="CCSD — Universidad de Buenos Aires" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="{{ config.base_url }}" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CCSD — Centro de Criptografía y Sistemas Distribuidos | UBA" />
+  <meta property="og:description" content="Investigación y desarrollo en criptografía, sistemas distribuidos y seguridad digital desde la Universidad de Buenos Aires." />
+  <meta property="og:url" content="{{ config.base_url }}" />
+  <meta property="og:locale" content="es_AR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CCSD — Centro de Criptografía y Sistemas Distribuidos" />
+  <meta name="twitter:description" content="Investigación y desarrollo en criptografía y sistemas distribuidos desde la UBA." />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ResearchOrganization",
+    "name": "Centro de Criptografía y Sistemas Distribuidos",
+    "alternateName": "CCSD",
+    "description": "Centro de investigación y desarrollo en criptografía y sistemas distribuidos de la Universidad de Buenos Aires.",
+    "url": "https://ccsd.uba.ar/",
+    "email": "centro.criptografia@uba.ar",
+    "parentOrganization": {
+      "@type": "EducationalOrganization",
+      "name": "Universidad de Buenos Aires",
+      "alternateName": "UBA"
+    },
+    "member": [
+      { "@type": "Person", "name": "Pablo A. Deymonnaz", "jobTitle": "Director" },
+      { "@type": "Person", "name": "Diego Kingston", "jobTitle": "Director de Investigación" }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── TOKENS ────────────────────────────────────────────── */
+    :root {
+      --cream:      #f0ede4;
+      --cream-2:    #e8e4d9;
+      --cream-3:    #ddd9ce;
+      --ink:        #141413;
+      --ink-2:      #3d3c39;
+      --ink-3:      #7a7872;
+      --green:      #4a6827;
+      --green-2:    #6b8c3e;
+      --border:     rgba(20,20,19,.10);
+      --border-2:   rgba(20,20,19,.18);
+      --serif: 'Newsreader', 'Georgia', serif;
+      --sans:  'Inter', system-ui, sans-serif;
+      --r:   4px;
+      --r-l: 8px;
+    }
+
+    html  { scroll-behavior: smooth; }
+    body  {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── UTILS ──────────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 500;
+      margin-bottom: .75rem;
+    }
+    .eyebrow.accent { color: var(--green); }
+
+    .display {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -.02em;
+      line-height: 1.12;
+      margin-bottom: 1rem;
+    }
+    .display em { font-style: italic; color: var(--ink-2); }
+
+    .body-text { color: var(--ink-2); font-size: .95rem; line-height: 1.78; }
+
+    .divider { height: 1px; background: var(--border); }
+
+    .chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border: 1px solid var(--border-2);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: .04em;
+      color: var(--ink-2);
+      font-weight: 500;
+    }
+    .chip.green { border-color: var(--green); color: var(--green); }
+
+    .btn {
+      display: inline-block;
+      padding: 11px 22px;
+      border-radius: var(--r);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity .18s, transform .18s;
+    }
+    .btn-fill { background: var(--green); color: #fff; }
+    .btn-fill:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--border-2); color: var(--ink); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+    .section { padding: 96px 2.5rem; }
+
+    .row-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.75rem;
+    }
+    .see-all {
+      font-size: 13px;
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity .18s;
+    }
+    .see-all:hover { opacity: .7; }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 62px; padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(240,237,228,.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(20,20,19,.07); }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 11px;
+      text-decoration: none; color: var(--ink);
+    }
+    .nav-mark {
+      width: 28px; height: 28px; border-radius: var(--r);
+      background: var(--ink); display: grid; place-items: center;
+      color: var(--cream); font-family: var(--serif);
+      font-size: 14px; font-weight: 400; font-style: italic;
+    }
+    .nav-name { font-family: var(--sans); font-weight: 600; font-size: 14px; letter-spacing: -.01em; }
+
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { color: var(--ink-2); text-decoration: none; font-size: 13.5px; font-weight: 400; transition: color .18s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links .cta {
+      padding: 7px 16px; border: 1px solid var(--border-2); border-radius: var(--r);
+      color: var(--ink) !important; font-weight: 500 !important;
+      transition: background .18s, border-color .18s !important;
+    }
+    .nav-links .cta:hover { background: var(--ink); color: var(--cream) !important; border-color: var(--ink); }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 2.5rem 100px;
+      text-align: center; background: var(--cream); overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; width: 800px; height: 600px;
+      top: 50%; left: 50%; transform: translate(-50%, -55%);
+      background: radial-gradient(ellipse at center, rgba(74,104,39,.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero-canvas { position: absolute; inset: 0; opacity: .18; pointer-events: none; }
+
+    .hero-label {
+      position: relative;
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-3); font-weight: 500; margin-bottom: 2.25rem;
+    }
+    .hero-label::before {
+      content: ''; display: inline-block; width: 6px; height: 6px;
+      background: var(--green); border-radius: 50%;
+      animation: blink 2.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity:1; } 50% { opacity:.25; } }
+
+    .hero-h {
+      position: relative; font-family: var(--serif);
+      font-size: clamp(3.2rem, 8vw, 6.8rem); font-weight: 300;
+      letter-spacing: -.03em; line-height: 1.0;
+      max-width: 900px; margin-bottom: 1.75rem;
+    }
+    .hero-h em { font-style: italic; color: var(--green); }
+
+    .hero-sub {
+      position: relative; font-size: 1.05rem; color: var(--ink-2);
+      max-width: 540px; line-height: 1.82; margin-bottom: 2.75rem; font-weight: 300;
+    }
+
+    .hero-btns {
+      position: relative; display: flex; gap: .9rem; flex-wrap: wrap;
+      align-items: center; justify-content: center; margin-bottom: 5rem;
+    }
+
+    .hero-stats {
+      position: relative; display: flex; gap: 4rem;
+      border-top: 1px solid var(--border); padding-top: 2.5rem;
+    }
+    .stat { text-align: left; }
+    .stat-num {
+      font-family: var(--serif); font-size: 2.4rem; font-weight: 300;
+      letter-spacing: -.04em; line-height: 1; display: block;
+    }
+    .stat-lbl { font-size: 11.5px; color: var(--ink-3); letter-spacing: .06em; text-transform: uppercase; margin-top: 5px; }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    #about { background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 5fr 4fr; gap: 6rem; align-items: start; }
+    .about-text .display { margin-bottom: 1.5rem; }
+    .about-text p { color: var(--ink-2); font-size: .97rem; line-height: 1.82; margin-bottom: 1.1rem; font-weight: 300; }
+    .about-text p:last-of-type { margin-bottom: 1.75rem; }
+
+    .about-code {
+      position: sticky; top: 80px; background: var(--ink); border-radius: var(--r-l);
+      padding: 2rem 2.2rem;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      font-size: 12px; line-height: 1.95; color: rgba(240,237,228,.55); overflow: hidden;
+    }
+    .about-code::before {
+      content: '● ● ●'; display: block; font-size: 10px; letter-spacing: .3em;
+      color: rgba(240,237,228,.2); margin-bottom: 1.25rem;
+    }
+    .c-cmt { color: rgba(240,237,228,.28); }
+    .c-key { color: #8aba5c; }
+    .c-str { color: #7ec8a0; }
+    .c-num { color: #b8c0d0; }
+    .c-fn  { color: rgba(240,237,228,.75); }
+
+    /* ── RESEARCH ───────────────────────────────────────────── */
+    #research { background: var(--cream); }
+    .research-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r-l);
+      overflow: hidden; margin-top: 2.75rem;
+    }
+    .r-card { background: var(--cream); padding: 2rem 1.85rem; transition: background .18s; }
+    .r-card:hover { background: var(--cream-2); }
+    .r-num { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: rgba(20,20,19,.12); line-height: 1; margin-bottom: 1rem; }
+    .r-title { font-size: .97rem; font-weight: 600; letter-spacing: -.01em; margin-bottom: .55rem; }
+    .r-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
+    .r-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 1.25rem; }
+
+    /* ── PROJECTS ───────────────────────────────────────────── */
+    #projects { background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .proj-list { margin-top: .25rem; }
+    .proj-row {
+      display: grid; grid-template-columns: 10px 1fr auto;
+      align-items: center; gap: 2rem; padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border); transition: opacity .18s; cursor: default;
+    }
+    .proj-row:first-child { border-top: 1px solid var(--border); }
+    .proj-row:hover { opacity: .72; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #3d9e6a; flex-shrink: 0; }
+    .dot.pause { background: #c8960a; }
+    .proj-name { font-family: var(--serif); font-weight: 400; font-size: 1.1rem; letter-spacing: -.01em; margin-bottom: 3px; }
+    .proj-desc { font-size: 13px; color: var(--ink-3); font-weight: 300; }
+
+    /* ── TEAM ───────────────────────────────────────────────── */
+    #team { background: var(--cream); }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r-l);
+      overflow: hidden; margin-top: 2.75rem;
+    }
+    .m-card { background: var(--cream); padding: 1.75rem 1.5rem; transition: background .18s; }
+    .m-card:hover { background: var(--cream-2); }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%; margin-bottom: 1rem;
+      background: var(--ink); display: grid; place-items: center;
+      color: var(--cream); font-family: var(--serif); font-size: .95rem; font-weight: 300; font-style: italic;
+    }
+    .m-name { font-size: 14.5px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 3px; }
+    .m-role { font-size: 11px; color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; margin-bottom: .55rem; }
+    .m-focus { font-size: 12.5px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
+
+    .m-card.open {
+      background: transparent; display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start; min-height: 160px; cursor: pointer;
+    }
+    .m-card.open:hover { background: var(--cream-2); }
+    .open-plus { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; line-height: 1; color: var(--ink-3); margin-bottom: .4rem; }
+    .open-lbl { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .open-sub { font-size: 12px; color: var(--green); margin-top: 3px; }
+
+    /* ── NEWS ───────────────────────────────────────────────── */
+    #news { background: var(--cream-2); border-top: 1px solid var(--border); }
+    .news-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r-l);
+      overflow: hidden; margin-top: .25rem;
+    }
+    .n-card { display: block; background: var(--cream-2); padding: 2rem 1.85rem; text-decoration: none; color: var(--ink); transition: background .18s; }
+    .n-card:hover { background: var(--cream-3); }
+    .n-date { font-size: 11px; color: var(--ink-3); letter-spacing: .08em; margin-bottom: .9rem; }
+    .n-cat { display: inline-block; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--green); margin-bottom: .6rem; }
+    .n-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; letter-spacing: -.01em; line-height: 1.38; margin-bottom: .6rem; }
+    .n-excerpt { font-size: 13px; color: var(--ink-2); line-height: 1.68; font-weight: 300; }
+    .n-arrow { display: inline-block; margin-top: 1.25rem; font-size: 18px; color: var(--ink-3); transition: transform .18s, color .18s; }
+    .n-card:hover .n-arrow { transform: translateX(4px); color: var(--green); }
+
+    /* ── OBJETIVOS ──────────────────────────────────────────── */
+    #objetivos { background: var(--cream); border-top: 1px solid var(--border); }
+    .obj-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r-l);
+      overflow: hidden; margin-top: 2.75rem;
+    }
+    .obj-card { background: var(--cream); padding: 2rem 1.85rem; transition: background .18s; }
+    .obj-card:hover { background: var(--cream-2); }
+    .obj-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: rgba(20,20,19,.12); margin-bottom: .75rem; }
+    .obj-title { font-size: .97rem; font-weight: 600; margin-bottom: .45rem; }
+    .obj-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
+
+    /* ── CTA STRIP ─────────────────────────────────────────── */
+    #cta-strip { background: var(--ink); padding: 80px 2.5rem; text-align: center; }
+    .cta-h { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; color: var(--cream); letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1rem; }
+    .cta-h em { font-style: italic; color: var(--green-2); }
+    .cta-sub { color: rgba(240,237,228,.55); font-size: .95rem; font-weight: 300; margin-bottom: 2.5rem; }
+    .btn-cream { display: inline-block; padding: 12px 28px; background: var(--cream); color: var(--ink); border-radius: var(--r); font-weight: 600; font-size: 14px; text-decoration: none; transition: opacity .18s; }
+    .btn-cream:hover { opacity: .88; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer { background: var(--ink); border-top: 1px solid rgba(240,237,228,.08); padding: 2.5rem 2.5rem; }
+    .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem; }
+    .footer-brand { font-family: var(--serif); color: var(--cream); font-size: 1rem; font-weight: 300; font-style: italic; }
+    .footer-brand small { display: block; font-weight: 400; font-size: 12px; color: rgba(240,237,228,.4); margin-top: 3px; font-style: normal; font-family: var(--sans); }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(240,237,228,.4); text-decoration: none; font-size: 13px; transition: color .18s; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-copy { font-size: 12px; color: rgba(240,237,228,.3); }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-code  { position: static; }
+      .research-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid   { grid-template-columns: 1fr 1fr; }
+      .news-grid   { grid-template-columns: 1fr 1fr; }
+      .obj-grid    { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; flex-wrap: wrap; }
+      .research-grid, .team-grid, .news-grid { grid-template-columns: 1fr; }
+      .proj-row { grid-template-columns: 10px 1fr; }
+      .proj-row .chip { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-brand">
+    <div class="nav-mark">C</div>
+    <span class="nav-name">CCSD</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre el CCSD</a></li>
+    <li><a href="#research">Investigación</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#team">Equipo</a></li>
+    <li><a href="{{ get_url(path='blog', lang=lang) }}">Blog</a></li>
+    <li><a href="#contact" class="cta">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+
+  <div class="hero-label">Secretaría de Ciencia y Técnica — Universidad de Buenos Aires</div>
+
+  <h1 class="hero-h">
+    Centro de <em>Criptografía</em><br>
+    y Sistemas Distribuidos
+  </h1>
+
+  <p class="hero-sub">
+    Un espacio de investigación, desarrollo y articulación público-privada orientado a garantizar la confidencialidad, integridad y autenticidad de la información en sectores estratégicos.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#research" class="btn btn-fill">Nuestras líneas de investigación</a>
+    <a href="#about"    class="btn btn-outline">Conocer el centro →</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" data-target="6">0</span>
+      <span class="stat-lbl">Ejes de investigación</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="3">0</span>
+      <span class="stat-lbl">Eventos en 2025</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="2">0</span>
+      <span class="stat-lbl">Directores</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="1">0</span>
+      <span class="stat-lbl">Universidad pública</span>
+    </div>
   </div>
 </section>
 
-<!-- Posts recientes -->
-<section class="recent-posts">
-  <h2 class="section-title">{{ trans(key="recent_posts", lang=lang) }}</h2>
+<div class="divider"></div>
 
-  {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
-  {% set posts = blog_section.pages | slice(end=5) %}
+<!-- ══ ABOUT ══════════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
 
-  {% if posts %}
-  <div class="post-list">
-    {% for post in posts %}
-    <article class="post-card">
-      <div class="post-card-meta">
-        <time datetime="{{ post.date | date(format='%Y-%m-%d') }}" class="post-date">
-          {{ post.date | date(format="%d %b %Y") }}
-        </time>
-        {% if config.extra.show_reading_time %}
-        <span class="reading-time">&middot; {{ post.reading_time }} {{ trans(key="min_read", lang=lang) }}</span>
-        {% endif %}
-        {% if post.taxonomies.tags %}
-        <div class="post-tags">
-          {% for tag in post.taxonomies.tags %}
-          <a href="{{ get_taxonomy_url(kind='tags', name=tag, lang=lang) }}" class="tag">{{ tag }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
+      <div class="about-text">
+        <div class="eyebrow">Sobre el CCSD</div>
+        <h2 class="display">Investigación que <em>fortalece</em> la soberanía tecnológica</h2>
+        <p>
+          El Centro de Criptografía y Sistemas Distribuidos (CCSD) de la Universidad de Buenos Aires desarrolla tecnologías y técnicas orientadas a garantizar la confidencialidad, integridad y autenticidad de la información en sectores estratégicos.
+        </p>
+        <p>
+          Nuestro propósito es ser una referencia en la aplicación de herramientas criptográficas para fortalecer la seguridad en los sistemas, generando conocimiento, investigando tecnologías seguras y eficientes, y promoviendo la formación y la articulación con organismos públicos y privados.
+        </p>
+        <p>
+          Impulsamos el desarrollo de soluciones criptográficas y sistemas distribuidos seguros y escalables, fortaleciendo la infraestructura digital de Argentina y la región.
+        </p>
+        <a href="#objetivos" class="btn btn-fill" style="margin-top:.5rem;">Ver objetivos →</a>
       </div>
-      <h3 class="post-card-title">
-        <a href="{{ post.permalink }}">{{ post.title }}</a>
-      </h3>
-      {% if post.description %}
-      <p class="post-card-excerpt">{{ post.description }}</p>
-      {% elif post.summary %}
-      <p class="post-card-excerpt">{{ post.summary | truncate(length=200) }}</p>
-      {% endif %}
-      <a href="{{ post.permalink }}" class="read-more">{{ trans(key="read_more", lang=lang) }} &rarr;</a>
-    </article>
-    {% endfor %}
-  </div>
 
-  <div class="view-all">
-    <a href="{{ get_url(path='blog', lang=lang) }}" class="btn-secondary">{{ trans(key="view_all_posts", lang=lang) }}</a>
+      <div class="about-code">
+<span class="c-cmt">// Esquema de compromiso de Pedersen</span>
+<span class="c-key">fn</span> <span class="c-fn">commit</span>(x: Field, r: Scalar) → G {
+  <span class="c-key">return</span> G·<span class="c-num">x</span> + H·<span class="c-num">r</span>
+}
+
+<span class="c-cmt">// Verificador zkSNARK (Groth16)</span>
+<span class="c-key">fn</span> <span class="c-fn">verify</span>(π, x_pub) → bool {
+  e(A, B)
+    == e(α, β)
+     · e(<span class="c-fn">L</span>(x_pub), γ)
+     · e(C, δ)
+}
+
+<span class="c-cmt">// Invariante de seguridad BFT</span>
+<span class="c-key">assert</span> ∀ nodos honestos A, B:
+  <span class="c-fn">decidido</span>(A, v) ∧ <span class="c-fn">decidido</span>(B, w)
+    → v = w
+      </div>
+
+    </div>
   </div>
-  {% else %}
-  <p class="empty-state">{{ trans(key="no_posts", lang=lang) }}</p>
-  {% endif %}
 </section>
-{% endblock %}
+
+<div class="divider"></div>
+
+<!-- ══ OBJETIVOS ══════════════════════════════════════════════ -->
+<section id="objetivos" class="section">
+  <div class="container">
+    <div class="eyebrow accent">Objetivos específicos</div>
+    <h2 class="display">Lo que nos <em>mueve</em></h2>
+    <p class="body-text" style="max-width:520px;">Cuatro pilares que guían nuestro trabajo cotidiano y nuestras alianzas estratégicas.</p>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-num">01</div>
+        <div class="obj-title">Investigación en criptografía y sistemas distribuidos</div>
+        <div class="obj-desc">Generamos conocimiento original sobre protocolos criptográficos, sistemas de prueba y mecanismos de consenso aplicables a entornos reales.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">02</div>
+        <div class="obj-title">Formación y desarrollo académico</div>
+        <div class="obj-desc">Fomentamos la capacitación de estudiantes, investigadores y profesionales en criptografía aplicada, seguridad digital y sistemas distribuidos.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">03</div>
+        <div class="obj-title">Vinculación con sectores estratégicos</div>
+        <div class="obj-desc">Articulamos con organismos públicos y empresas privadas para transferir conocimiento y garantizar que nuestra investigación tenga impacto concreto.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-num">04</div>
+        <div class="obj-title">Transferencia de conocimiento e industria</div>
+        <div class="obj-desc">Traducimos resultados académicos en soluciones prácticas, colaborando con la industria tecnológica nacional e internacional.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ RESEARCH ══════════════════════════════════════════════ -->
+<section id="research" class="section">
+  <div class="container">
+    <div class="eyebrow accent">Ejes de investigación</div>
+    <h2 class="display">En qué trabajamos</h2>
+    <p class="body-text" style="max-width:540px;">Seis líneas de investigación activas que abarcan desde la seguridad post-cuántica hasta la privacidad en inteligencia artificial.</p>
+
+    <div class="research-grid">
+
+      <div class="r-card">
+        <div class="r-num">01</div>
+        <div class="r-title">Criptografía post-cuántica</div>
+        <div class="r-desc">Investigamos el impacto de las computadoras cuánticas en los algoritmos criptográficos actuales y desarrollamos esquemas resistentes a ataques cuánticos.</div>
+        <div class="r-tags">
+          <span class="chip">Lattices</span>
+          <span class="chip">NIST PQC</span>
+          <span class="chip">Kyber</span>
+        </div>
+      </div>
+
+      <div class="r-card">
+        <div class="r-num">02</div>
+        <div class="r-title">Cifrado eficiente para entornos restringidos</div>
+        <div class="r-desc">Diseñamos algoritmos de cifrado optimizados para dispositivos con recursos limitados de cómputo, memoria y energía.</div>
+        <div class="r-tags">
+          <span class="chip">Lightweight</span>
+          <span class="chip">AES</span>
+          <span class="chip">ChaCha20</span>
+        </div>
+      </div>
+
+      <div class="r-card">
+        <div class="r-num">03</div>
+        <div class="r-title">Blockchain y transparencia gubernamental</div>
+        <div class="r-desc">Estudiamos aplicaciones de blockchain para mejorar la transparencia, trazabilidad y auditabilidad en organismos del Estado.</div>
+        <div class="r-tags">
+          <span class="chip">Smart Contracts</span>
+          <span class="chip">Auditoría</span>
+          <span class="chip">DLT</span>
+        </div>
+      </div>
+
+      <div class="r-card">
+        <div class="r-num">04</div>
+        <div class="r-title">Consenso y propagación en redes distribuidas</div>
+        <div class="r-desc">Analizamos algoritmos de consenso y mecanismos de propagación de información en ambientes distribuidos con tolerancia a fallas byzantinas.</div>
+        <div class="r-tags">
+          <span class="chip">BFT</span>
+          <span class="chip">PoS</span>
+          <span class="chip">Gossip</span>
+        </div>
+      </div>
+
+      <div class="r-card">
+        <div class="r-num">05</div>
+        <div class="r-title">Seguridad en el Internet de las Cosas</div>
+        <div class="r-desc">Abordamos los desafíos de seguridad propios de redes IoT: autenticación liviana, canales seguros y gestión de claves en dispositivos embebidos.</div>
+        <div class="r-tags">
+          <span class="chip">IoT</span>
+          <span class="chip">TLS</span>
+          <span class="chip">DTLS</span>
+        </div>
+      </div>
+
+      <div class="r-card">
+        <div class="r-num">06</div>
+        <div class="r-title">Privacidad en inteligencia artificial</div>
+        <div class="r-desc">Desarrollamos técnicas de privacidad diferencial, aprendizaje federado y computación segura multipartita aplicadas a modelos de IA.</div>
+        <div class="r-tags">
+          <span class="chip">MPC</span>
+          <span class="chip">Federated Learning</span>
+          <span class="chip">DP</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PROJECTS ══════════════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <div class="eyebrow accent">Próximamente</div>
+        <h2 class="display" style="margin-bottom:0;">Lo que viene</h2>
+      </div>
+    </div>
+
+    <p class="body-text" style="max-width:600px; margin-bottom:2.5rem;">Estamos ultimando los detalles de nuestras primeras iniciativas. Pronto vamos a anunciar todo oficialmente — mientras tanto, un adelanto de lo que se viene.</p>
+
+    <div class="proj-list">
+      <div class="proj-row">
+        <div class="dot pause"></div>
+        <div>
+          <div class="proj-name">Proyectos de investigación</div>
+          <div class="proj-desc">Dos proyectos en desarrollo en las áreas de criptografía aplicada y sistemas distribuidos. Próximo anuncio con detalles y equipo.</div>
+        </div>
+        <span class="chip">en preparación</span>
+      </div>
+      <div class="proj-row">
+        <div class="dot pause"></div>
+        <div>
+          <div class="proj-name">Curso de criptografía aplicada</div>
+          <div class="proj-desc">Formación teórico-práctica destinada a estudiantes universitarios y de posgrado. Detalles de inscripción y programa próximamente.</div>
+        </div>
+        <span class="chip">formación</span>
+      </div>
+      <div class="proj-row">
+        <div class="dot pause"></div>
+        <div>
+          <div class="proj-name">Programa de becas de investigación</div>
+          <div class="proj-desc">Becas para estudiantes que quieran sumarse a las líneas de investigación del centro. Bases y condiciones en elaboración.</div>
+        </div>
+        <span class="chip">becas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ TEAM ══════════════════════════════════════════════════ -->
+<section id="team" class="section">
+  <div class="container">
+    <div class="eyebrow accent">Quiénes somos</div>
+    <h2 class="display">El equipo</h2>
+    <p class="body-text" style="max-width:480px; margin-bottom:0;">Investigadores y profesionales de la Universidad de Buenos Aires dedicados al avance de la criptografía y los sistemas distribuidos.</p>
+
+    <div class="team-grid">
+      <div class="m-card">
+        <div class="avatar">PD</div>
+        <div class="m-name">Pablo A. Deymonnaz</div>
+        <div class="m-role">Director</div>
+        <div class="m-focus">Ing. — Criptografía aplicada y seguridad de sistemas</div>
+      </div>
+      <div class="m-card">
+        <div class="avatar">DK</div>
+        <div class="m-name">Diego Kingston</div>
+        <div class="m-role">Director de Investigación</div>
+        <div class="m-focus">Dr. Ing. — Sistemas distribuidos y protocolos de consenso</div>
+      </div>
+      <div class="m-card">
+        <div class="avatar">+</div>
+        <div class="m-name">Investigadores</div>
+        <div class="m-role">Equipo de investigación</div>
+        <div class="m-focus">Docentes e investigadores de la UBA en criptografía y sistemas seguros</div>
+      </div>
+      <div class="m-card open" onclick="location.href='mailto:centro.criptografia@uba.ar'">
+        <div class="open-plus">+</div>
+        <div class="open-lbl">Sumate al centro</div>
+        <div class="open-sub">Contactanos →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ NEWS ══════════════════════════════════════════════════ -->
+<section id="news" class="section">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <div class="eyebrow accent">Blog</div>
+        <h2 class="display" style="margin-bottom:0;">Publicaciones</h2>
+      </div>
+      <a href="{{ get_url(path='blog', lang=lang) }}" class="see-all">Ir al blog &rarr;</a>
+    </div>
+
+    {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
+    {% set posts = blog_section.pages | slice(end=3) %}
+
+    {% if posts %}
+    <div class="news-grid">
+      {% for post in posts %}
+      <a href="{{ post.permalink }}" class="n-card">
+        <div class="n-date">{{ post.date | date(format="%d %b %Y") }}</div>
+        <div class="n-title">{{ post.title }}</div>
+        {% if post.description %}
+        <div class="n-excerpt">{{ post.description }}</div>
+        {% endif %}
+        <span class="n-arrow">&rarr;</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ══ CTA STRIP ══════════════════════════════════════════════ -->
+<section id="cta-strip">
+  <div class="container" style="max-width:680px; text-align:center;">
+    <h2 class="cta-h">Trabajemos juntos en el <em>futuro de la seguridad digital</em></h2>
+    <p class="cta-sub">Investigación colaborativa, formación académica y articulación con organismos públicos y privados.</p>
+    <a href="mailto:centro.criptografia@uba.ar" class="btn-cream">centro.criptografia@uba.ar</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        CCSD
+        <small>Centro de Criptografía y Sistemas Distribuidos — Universidad de Buenos Aires</small>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="#about">Sobre el CCSD</a>
+      <a href="#research">Investigación</a>
+      <a href="#team">Equipo</a>
+      <a href="https://ccsd.uba.ar/" target="_blank">Sitio oficial</a>
+      <a href="mailto:centro.criptografia@uba.ar">Contacto</a>
+    </div>
+    <div class="footer-copy">© 2025 CCSD — UBA</div>
+  </div>
+</footer>
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
+<script>
+/* Navbar scroll */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 20);
+});
+
+/* Canvas de red */
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let nodes    = [];
+
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+
+  function init() {
+    nodes = [];
+    const count = Math.floor((canvas.width * canvas.height) / 16000);
+    for (let i = 0; i < count; i++) {
+      nodes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - .5) * .38, vy: (Math.random() - .5) * .38, r: Math.random() * 1.8 + 1 });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+    }
+    const maxDist = 145;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < maxDist) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(74,104,39,${(1 - dist / maxDist) * .45})`;
+          ctx.lineWidth = .8;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    for (const n of nodes) {
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(74,104,39,.55)'; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+
+/* Contadores */
+(function () {
+  let fired = false;
+  const obs = new IntersectionObserver(entries => {
+    if (fired || !entries[0].isIntersecting) return;
+    fired = true;
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const target = +el.dataset.target;
+      let val = 0;
+      const step = Math.max(target / 44, 0.05);
+      const iv = setInterval(() => {
+        val = Math.min(val + step, target);
+        el.textContent = Math.floor(val);
+        if (val >= target) { el.textContent = target; clearInterval(iv); }
+      }, 26);
+    });
+  }, { threshold: .2 });
+  obs.observe(document.getElementById('hero'));
+})();
+</script>
+
+</body>
+</html>

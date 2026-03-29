@@ -408,6 +408,7 @@
     <li><a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a></li>
     <li><a href="{{ get_url(path='blog', lang=lang) }}">Blog</a></li>
     <li><a href="#contact" class="cta">{{ trans(key="lp_nav_contact", lang=lang) }}</a></li>
+    <li>{% if lang == "es" %}<a href="/en/">EN</a>{% else %}<a href="/">ES</a>{% endif %}</li>
   </ul>
 </nav>
 

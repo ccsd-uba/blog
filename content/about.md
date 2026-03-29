@@ -18,6 +18,3 @@ El Centro de Criptografía y Sistemas Distribuidos de la UBA tiene por objeto el
 
 Si querés saber más sobre el centro o colaborar en algún proyecto, podés encontrarnos en [GitHub](https://github.com/ccsd-uba) o enviarnos un mail.
 
----
-
-*Este blog está hecho con [Zola](https://www.getzola.org/), un generador de sitios estáticos escrito en Rust.*

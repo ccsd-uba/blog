@@ -402,12 +402,12 @@
     <span class="nav-name">CCSD</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#about">Sobre el CCSD</a></li>
-    <li><a href="#research">Investigación</a></li>
-    <li><a href="#projects">Proyectos</a></li>
-    <li><a href="#team">Equipo</a></li>
+    <li><a href="#about">{{ trans(key="lp_nav_about", lang=lang) }}</a></li>
+    <li><a href="#research">{{ trans(key="lp_nav_research", lang=lang) }}</a></li>
+    <li><a href="#projects">{{ trans(key="lp_nav_projects", lang=lang) }}</a></li>
+    <li><a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a></li>
     <li><a href="{{ get_url(path='blog', lang=lang) }}">Blog</a></li>
-    <li><a href="#contact" class="cta">Contacto</a></li>
+    <li><a href="#contact" class="cta">{{ trans(key="lp_nav_contact", lang=lang) }}</a></li>
   </ul>
 </nav>
 
@@ -415,38 +415,38 @@
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
 
-  <div class="hero-label">Secretaría de Ciencia y Técnica — Universidad de Buenos Aires</div>
+  <div class="hero-label">{{ trans(key="lp_hero_label", lang=lang) }}</div>
 
   <h1 class="hero-h">
-    Centro de <em>Criptografía</em><br>
-    y Sistemas Distribuidos
+    {{ trans(key="lp_hero_h1", lang=lang) }} <em>{{ trans(key="lp_hero_h1_em", lang=lang) }}</em><br>
+    {{ trans(key="lp_hero_h1_end", lang=lang) }}
   </h1>
 
   <p class="hero-sub">
-    Un espacio de investigación, desarrollo y articulación público-privada orientado a garantizar la confidencialidad, integridad y autenticidad de la información en sectores estratégicos.
+    {{ trans(key="lp_hero_sub", lang=lang) }}
   </p>
 
   <div class="hero-btns">
-    <a href="#research" class="btn btn-fill">Nuestras líneas de investigación</a>
-    <a href="#about"    class="btn btn-outline">Conocer el centro →</a>
+    <a href="#research" class="btn btn-fill">{{ trans(key="lp_hero_btn_research", lang=lang) }}</a>
+    <a href="#about"    class="btn btn-outline">{{ trans(key="lp_hero_btn_about", lang=lang) }} &rarr;</a>
   </div>
 
   <div class="hero-stats">
     <div class="stat">
       <span class="stat-num" data-target="6">0</span>
-      <span class="stat-lbl">Ejes de investigación</span>
+      <span class="stat-lbl">{{ trans(key="lp_stat_research", lang=lang) }}</span>
     </div>
     <div class="stat">
       <span class="stat-num" data-target="3">0</span>
-      <span class="stat-lbl">Eventos en 2025</span>
+      <span class="stat-lbl">{{ trans(key="lp_stat_events", lang=lang) }}</span>
     </div>
     <div class="stat">
       <span class="stat-num" data-target="2">0</span>
-      <span class="stat-lbl">Directores</span>
+      <span class="stat-lbl">{{ trans(key="lp_stat_directors", lang=lang) }}</span>
     </div>
     <div class="stat">
       <span class="stat-num" data-target="1">0</span>
-      <span class="stat-lbl">Universidad pública</span>
+      <span class="stat-lbl">{{ trans(key="lp_stat_university", lang=lang) }}</span>
     </div>
   </div>
 </section>
@@ -459,27 +459,21 @@
     <div class="about-grid">
 
       <div class="about-text">
-        <div class="eyebrow">Sobre el CCSD</div>
-        <h2 class="display">Investigación que <em>fortalece</em> la soberanía tecnológica</h2>
-        <p>
-          El Centro de Criptografía y Sistemas Distribuidos (CCSD) de la Universidad de Buenos Aires desarrolla tecnologías y técnicas orientadas a garantizar la confidencialidad, integridad y autenticidad de la información en sectores estratégicos.
-        </p>
-        <p>
-          Nuestro propósito es ser una referencia en la aplicación de herramientas criptográficas para fortalecer la seguridad en los sistemas, generando conocimiento, investigando tecnologías seguras y eficientes, y promoviendo la formación y la articulación con organismos públicos y privados.
-        </p>
-        <p>
-          Impulsamos el desarrollo de soluciones criptográficas y sistemas distribuidos seguros y escalables, fortaleciendo la infraestructura digital de Argentina y la región.
-        </p>
-        <a href="#objetivos" class="btn btn-fill" style="margin-top:.5rem;">Ver objetivos →</a>
+        <div class="eyebrow">{{ trans(key="lp_about_eyebrow", lang=lang) }}</div>
+        <h2 class="display">{{ trans(key="lp_about_title", lang=lang) | safe }}</h2>
+        <p>{{ trans(key="lp_about_p1", lang=lang) }}</p>
+        <p>{{ trans(key="lp_about_p2", lang=lang) }}</p>
+        <p>{{ trans(key="lp_about_p3", lang=lang) }}</p>
+        <a href="#objetivos" class="btn btn-fill" style="margin-top:.5rem;">{{ trans(key="lp_about_btn", lang=lang) }} &rarr;</a>
       </div>
 
       <div class="about-code">
-<span class="c-cmt">// Esquema de compromiso de Pedersen</span>
+<span class="c-cmt">{{ trans(key="lp_about_code_cmt1", lang=lang) }}</span>
 <span class="c-key">fn</span> <span class="c-fn">commit</span>(x: Field, r: Scalar) → G {
   <span class="c-key">return</span> G·<span class="c-num">x</span> + H·<span class="c-num">r</span>
 }
 
-<span class="c-cmt">// Verificador zkSNARK (Groth16)</span>
+<span class="c-cmt">{{ trans(key="lp_about_code_cmt2", lang=lang) }}</span>
 <span class="c-key">fn</span> <span class="c-fn">verify</span>(π, x_pub) → bool {
   e(A, B)
     == e(α, β)
@@ -487,8 +481,8 @@
      · e(C, δ)
 }
 
-<span class="c-cmt">// Invariante de seguridad BFT</span>
-<span class="c-key">assert</span> ∀ nodos honestos A, B:
+<span class="c-cmt">{{ trans(key="lp_about_code_cmt3", lang=lang) }}</span>
+<span class="c-key">assert</span> ∀ {{ trans(key="lp_about_code_assert", lang=lang) }} A, B:
   <span class="c-fn">decidido</span>(A, v) ∧ <span class="c-fn">decidido</span>(B, w)
     → v = w
       </div>
@@ -502,30 +496,30 @@
 <!-- ══ OBJETIVOS ══════════════════════════════════════════════ -->
 <section id="objetivos" class="section">
   <div class="container">
-    <div class="eyebrow accent">Objetivos específicos</div>
-    <h2 class="display">Lo que nos <em>mueve</em></h2>
-    <p class="body-text" style="max-width:520px;">Cuatro pilares que guían nuestro trabajo cotidiano y nuestras alianzas estratégicas.</p>
+    <div class="eyebrow accent">{{ trans(key="lp_obj_eyebrow", lang=lang) }}</div>
+    <h2 class="display">{{ trans(key="lp_obj_title", lang=lang) | safe }}</h2>
+    <p class="body-text" style="max-width:520px;">{{ trans(key="lp_obj_subtitle", lang=lang) }}</p>
 
     <div class="obj-grid">
       <div class="obj-card">
         <div class="obj-num">01</div>
-        <div class="obj-title">Investigación en criptografía y sistemas distribuidos</div>
-        <div class="obj-desc">Generamos conocimiento original sobre protocolos criptográficos, sistemas de prueba y mecanismos de consenso aplicables a entornos reales.</div>
+        <div class="obj-title">{{ trans(key="lp_obj1_title", lang=lang) }}</div>
+        <div class="obj-desc">{{ trans(key="lp_obj1_desc", lang=lang) }}</div>
       </div>
       <div class="obj-card">
         <div class="obj-num">02</div>
-        <div class="obj-title">Formación y desarrollo académico</div>
-        <div class="obj-desc">Fomentamos la capacitación de estudiantes, investigadores y profesionales en criptografía aplicada, seguridad digital y sistemas distribuidos.</div>
+        <div class="obj-title">{{ trans(key="lp_obj2_title", lang=lang) }}</div>
+        <div class="obj-desc">{{ trans(key="lp_obj2_desc", lang=lang) }}</div>
       </div>
       <div class="obj-card">
         <div class="obj-num">03</div>
-        <div class="obj-title">Vinculación con sectores estratégicos</div>
-        <div class="obj-desc">Articulamos con organismos públicos y empresas privadas para transferir conocimiento y garantizar que nuestra investigación tenga impacto concreto.</div>
+        <div class="obj-title">{{ trans(key="lp_obj3_title", lang=lang) }}</div>
+        <div class="obj-desc">{{ trans(key="lp_obj3_desc", lang=lang) }}</div>
       </div>
       <div class="obj-card">
         <div class="obj-num">04</div>
-        <div class="obj-title">Transferencia de conocimiento e industria</div>
-        <div class="obj-desc">Traducimos resultados académicos en soluciones prácticas, colaborando con la industria tecnológica nacional e internacional.</div>
+        <div class="obj-title">{{ trans(key="lp_obj4_title", lang=lang) }}</div>
+        <div class="obj-desc">{{ trans(key="lp_obj4_desc", lang=lang) }}</div>
       </div>
     </div>
   </div>
@@ -536,16 +530,16 @@
 <!-- ══ RESEARCH ══════════════════════════════════════════════ -->
 <section id="research" class="section">
   <div class="container">
-    <div class="eyebrow accent">Ejes de investigación</div>
-    <h2 class="display">En qué trabajamos</h2>
-    <p class="body-text" style="max-width:540px;">Seis líneas de investigación activas que abarcan desde la seguridad post-cuántica hasta la privacidad en inteligencia artificial.</p>
+    <div class="eyebrow accent">{{ trans(key="lp_research_eyebrow", lang=lang) }}</div>
+    <h2 class="display">{{ trans(key="lp_research_title", lang=lang) }}</h2>
+    <p class="body-text" style="max-width:540px;">{{ trans(key="lp_research_subtitle", lang=lang) }}</p>
 
     <div class="research-grid">
 
       <div class="r-card">
         <div class="r-num">01</div>
-        <div class="r-title">Criptografía post-cuántica</div>
-        <div class="r-desc">Investigamos el impacto de las computadoras cuánticas en los algoritmos criptográficos actuales y desarrollamos esquemas resistentes a ataques cuánticos.</div>
+        <div class="r-title">{{ trans(key="lp_r1_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r1_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">Lattices</span>
           <span class="chip">NIST PQC</span>
@@ -555,8 +549,8 @@
 
       <div class="r-card">
         <div class="r-num">02</div>
-        <div class="r-title">Cifrado eficiente para entornos restringidos</div>
-        <div class="r-desc">Diseñamos algoritmos de cifrado optimizados para dispositivos con recursos limitados de cómputo, memoria y energía.</div>
+        <div class="r-title">{{ trans(key="lp_r2_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r2_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">Lightweight</span>
           <span class="chip">AES</span>
@@ -566,19 +560,19 @@
 
       <div class="r-card">
         <div class="r-num">03</div>
-        <div class="r-title">Blockchain y transparencia gubernamental</div>
-        <div class="r-desc">Estudiamos aplicaciones de blockchain para mejorar la transparencia, trazabilidad y auditabilidad en organismos del Estado.</div>
+        <div class="r-title">{{ trans(key="lp_r3_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r3_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">Smart Contracts</span>
-          <span class="chip">Auditoría</span>
+          <span class="chip">Audit</span>
           <span class="chip">DLT</span>
         </div>
       </div>
 
       <div class="r-card">
         <div class="r-num">04</div>
-        <div class="r-title">Consenso y propagación en redes distribuidas</div>
-        <div class="r-desc">Analizamos algoritmos de consenso y mecanismos de propagación de información en ambientes distribuidos con tolerancia a fallas byzantinas.</div>
+        <div class="r-title">{{ trans(key="lp_r4_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r4_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">BFT</span>
           <span class="chip">PoS</span>
@@ -588,8 +582,8 @@
 
       <div class="r-card">
         <div class="r-num">05</div>
-        <div class="r-title">Seguridad en el Internet de las Cosas</div>
-        <div class="r-desc">Abordamos los desafíos de seguridad propios de redes IoT: autenticación liviana, canales seguros y gestión de claves en dispositivos embebidos.</div>
+        <div class="r-title">{{ trans(key="lp_r5_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r5_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">IoT</span>
           <span class="chip">TLS</span>
@@ -599,8 +593,8 @@
 
       <div class="r-card">
         <div class="r-num">06</div>
-        <div class="r-title">Privacidad en inteligencia artificial</div>
-        <div class="r-desc">Desarrollamos técnicas de privacidad diferencial, aprendizaje federado y computación segura multipartita aplicadas a modelos de IA.</div>
+        <div class="r-title">{{ trans(key="lp_r6_title", lang=lang) }}</div>
+        <div class="r-desc">{{ trans(key="lp_r6_desc", lang=lang) }}</div>
         <div class="r-tags">
           <span class="chip">MPC</span>
           <span class="chip">Federated Learning</span>
@@ -619,37 +613,37 @@
   <div class="container">
     <div class="row-head">
       <div>
-        <div class="eyebrow accent">Próximamente</div>
-        <h2 class="display" style="margin-bottom:0;">Lo que viene</h2>
+        <div class="eyebrow accent">{{ trans(key="lp_proj_eyebrow", lang=lang) }}</div>
+        <h2 class="display" style="margin-bottom:0;">{{ trans(key="lp_proj_title", lang=lang) }}</h2>
       </div>
     </div>
 
-    <p class="body-text" style="max-width:600px; margin-bottom:2.5rem;">Estamos ultimando los detalles de nuestras primeras iniciativas. Pronto vamos a anunciar todo oficialmente — mientras tanto, un adelanto de lo que se viene.</p>
+    <p class="body-text" style="max-width:600px; margin-bottom:2.5rem;">{{ trans(key="lp_proj_subtitle", lang=lang) }}</p>
 
     <div class="proj-list">
       <div class="proj-row">
         <div class="dot pause"></div>
         <div>
-          <div class="proj-name">Proyectos de investigación</div>
-          <div class="proj-desc">Dos proyectos en desarrollo en las áreas de criptografía aplicada y sistemas distribuidos. Próximo anuncio con detalles y equipo.</div>
+          <div class="proj-name">{{ trans(key="lp_proj1_name", lang=lang) }}</div>
+          <div class="proj-desc">{{ trans(key="lp_proj1_desc", lang=lang) }}</div>
         </div>
-        <span class="chip">en preparación</span>
+        <span class="chip">{{ trans(key="lp_proj1_chip", lang=lang) }}</span>
       </div>
       <div class="proj-row">
         <div class="dot pause"></div>
         <div>
-          <div class="proj-name">Curso de criptografía aplicada</div>
-          <div class="proj-desc">Formación teórico-práctica destinada a estudiantes universitarios y de posgrado. Detalles de inscripción y programa próximamente.</div>
+          <div class="proj-name">{{ trans(key="lp_proj2_name", lang=lang) }}</div>
+          <div class="proj-desc">{{ trans(key="lp_proj2_desc", lang=lang) }}</div>
         </div>
-        <span class="chip">formación</span>
+        <span class="chip">{{ trans(key="lp_proj2_chip", lang=lang) }}</span>
       </div>
       <div class="proj-row">
         <div class="dot pause"></div>
         <div>
-          <div class="proj-name">Programa de becas de investigación</div>
-          <div class="proj-desc">Becas para estudiantes que quieran sumarse a las líneas de investigación del centro. Bases y condiciones en elaboración.</div>
+          <div class="proj-name">{{ trans(key="lp_proj3_name", lang=lang) }}</div>
+          <div class="proj-desc">{{ trans(key="lp_proj3_desc", lang=lang) }}</div>
         </div>
-        <span class="chip">becas</span>
+        <span class="chip">{{ trans(key="lp_proj3_chip", lang=lang) }}</span>
       </div>
     </div>
   </div>
@@ -660,33 +654,33 @@
 <!-- ══ TEAM ══════════════════════════════════════════════════ -->
 <section id="team" class="section">
   <div class="container">
-    <div class="eyebrow accent">Quiénes somos</div>
-    <h2 class="display">El equipo</h2>
-    <p class="body-text" style="max-width:480px; margin-bottom:0;">Investigadores y profesionales de la Universidad de Buenos Aires dedicados al avance de la criptografía y los sistemas distribuidos.</p>
+    <div class="eyebrow accent">{{ trans(key="lp_team_eyebrow", lang=lang) }}</div>
+    <h2 class="display">{{ trans(key="lp_team_title", lang=lang) }}</h2>
+    <p class="body-text" style="max-width:480px; margin-bottom:0;">{{ trans(key="lp_team_subtitle", lang=lang) }}</p>
 
     <div class="team-grid">
       <div class="m-card">
         <div class="avatar">PD</div>
         <div class="m-name">Pablo A. Deymonnaz</div>
-        <div class="m-role">Director</div>
-        <div class="m-focus">Ing. — Criptografía aplicada y seguridad de sistemas</div>
+        <div class="m-role">{{ trans(key="lp_team_pd_role", lang=lang) }}</div>
+        <div class="m-focus">{{ trans(key="lp_team_pd_focus", lang=lang) }}</div>
       </div>
       <div class="m-card">
         <div class="avatar">DK</div>
         <div class="m-name">Diego Kingston</div>
-        <div class="m-role">Director de Investigación</div>
-        <div class="m-focus">Dr. Ing. — Sistemas distribuidos y protocolos de consenso</div>
+        <div class="m-role">{{ trans(key="lp_team_dk_role", lang=lang) }}</div>
+        <div class="m-focus">{{ trans(key="lp_team_dk_focus", lang=lang) }}</div>
       </div>
       <div class="m-card">
         <div class="avatar">+</div>
-        <div class="m-name">Investigadores</div>
-        <div class="m-role">Equipo de investigación</div>
-        <div class="m-focus">Docentes e investigadores de la UBA en criptografía y sistemas seguros</div>
+        <div class="m-name">{{ trans(key="lp_team_researchers", lang=lang) }}</div>
+        <div class="m-role">{{ trans(key="lp_team_researchers_role", lang=lang) }}</div>
+        <div class="m-focus">{{ trans(key="lp_team_researchers_focus", lang=lang) }}</div>
       </div>
       <div class="m-card open" onclick="location.href='mailto:centro.criptografia@uba.ar'">
         <div class="open-plus">+</div>
-        <div class="open-lbl">Sumate al centro</div>
-        <div class="open-sub">Contactanos →</div>
+        <div class="open-lbl">{{ trans(key="lp_team_join", lang=lang) }}</div>
+        <div class="open-sub">{{ trans(key="lp_team_join_sub", lang=lang) }} &rarr;</div>
       </div>
     </div>
   </div>
@@ -700,9 +694,9 @@
     <div class="row-head">
       <div>
         <div class="eyebrow accent">Blog</div>
-        <h2 class="display" style="margin-bottom:0;">Publicaciones</h2>
+        <h2 class="display" style="margin-bottom:0;">{{ trans(key="lp_news_title", lang=lang) }}</h2>
       </div>
-      <a href="{{ get_url(path='blog', lang=lang) }}" class="see-all">Ir al blog &rarr;</a>
+      <a href="{{ get_url(path='blog', lang=lang) }}" class="see-all">{{ trans(key="lp_news_see_all", lang=lang) }} &rarr;</a>
     </div>
 
     {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
@@ -728,8 +722,8 @@
 <!-- ══ CTA STRIP ══════════════════════════════════════════════ -->
 <section id="cta-strip">
   <div class="container" style="max-width:680px; text-align:center;">
-    <h2 class="cta-h">Trabajemos juntos en el <em>futuro de la seguridad digital</em></h2>
-    <p class="cta-sub">Investigación colaborativa, formación académica y articulación con organismos públicos y privados.</p>
+    <h2 class="cta-h">{{ trans(key="lp_cta_title", lang=lang) | safe }}</h2>
+    <p class="cta-sub">{{ trans(key="lp_cta_subtitle", lang=lang) }}</p>
     <a href="mailto:centro.criptografia@uba.ar" class="btn-cream">centro.criptografia@uba.ar</a>
   </div>
 </section>
@@ -740,15 +734,15 @@
     <div>
       <div class="footer-brand">
         CCSD
-        <small>Centro de Criptografía y Sistemas Distribuidos — Universidad de Buenos Aires</small>
+        <small>{{ trans(key="lp_footer_brand", lang=lang) }}</small>
       </div>
     </div>
     <div class="footer-links">
-      <a href="#about">Sobre el CCSD</a>
-      <a href="#research">Investigación</a>
-      <a href="#team">Equipo</a>
-      <a href="https://ccsd.uba.ar/" target="_blank">Sitio oficial</a>
-      <a href="mailto:centro.criptografia@uba.ar">Contacto</a>
+      <a href="#about">{{ trans(key="lp_nav_about", lang=lang) }}</a>
+      <a href="#research">{{ trans(key="lp_nav_research", lang=lang) }}</a>
+      <a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a>
+      <a href="https://ccsd.uba.ar/" target="_blank">{{ trans(key="lp_footer_official", lang=lang) }}</a>
+      <a href="mailto:centro.criptografia@uba.ar">{{ trans(key="lp_nav_contact", lang=lang) }}</a>
     </div>
     <div class="footer-copy">© 2025 CCSD — UBA</div>
   </div>

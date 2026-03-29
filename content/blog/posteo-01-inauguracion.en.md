@@ -9,7 +9,7 @@ tags = ["ccsd", "uba", "inauguration"]
 [extra]
 +++
 
-# Post 01 — Inauguration at the UBA Palace
+# Inauguration at the UBA Palace
 
 **October 23, 2025 · UBA Palace, Arenales 1371**
 

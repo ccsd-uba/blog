@@ -9,7 +9,7 @@ tags = ["ccsd", "uba", "inauguración"]
 [extra]
 +++
 
-# Posteo 01 — Inauguración en el Palacio de la UBA
+# Inauguración en el Palacio de la UBA
 
 **23 de octubre de 2025 · Palacio de la UBA, Arenales 1371**
 

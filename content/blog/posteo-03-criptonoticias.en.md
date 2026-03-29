@@ -9,7 +9,7 @@ tags = ["ccsd", "press", "criptonoticias"]
 [extra]
 +++
 
-# Post 03 — CriptoNoticias
+# CriptoNoticias
 
 ## The CCSD in CriptoNoticias: Coverage of the Center Launch
 

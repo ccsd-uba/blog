@@ -9,7 +9,7 @@ tags = ["ccsd", "devconnect", "ethereum"]
 [extra]
 +++
 
-# Posteo 02 — Presentación en DevCon
+# Presentación en DevCon
 
 **Noviembre 2025 · Devconnect Buenos Aires**
 

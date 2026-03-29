@@ -9,7 +9,7 @@ tags = ["ccsd", "devconnect", "ethereum"]
 [extra]
 +++
 
-# Presentation at DevCon
+# Presentation at Devconnect
 
 ![Pablo Deymonnaz presenting the CCSD at Devconnect Buenos Aires](/images/devconnect-ccsd.jpeg)
 

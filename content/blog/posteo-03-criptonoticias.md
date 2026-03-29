@@ -11,6 +11,8 @@ tags = ["ccsd", "prensa", "criptonoticias"]
 
 # CriptoNoticias
 
+![Cobertura de CriptoNoticias sobre el CCSD](/images/criptonoticias-ccsd.jpg)
+
 ## El CCSD en CriptoNoticias: cobertura del lanzamiento del centro
 
 **Diciembre 2025**

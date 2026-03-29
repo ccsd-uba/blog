@@ -11,6 +11,8 @@ tags = ["ccsd", "uba", "inauguration"]
 
 # Inauguration at the UBA Palace
 
+![CCSD inaugural ceremony at the UBA Palace](/images/apertura-ccsd.jpeg)
+
 **October 23, 2025 · UBA Palace, Arenales 1371**
 
 ## The Center for Cryptography and Distributed Systems Opened Its Doors at UBA

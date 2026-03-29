@@ -11,6 +11,8 @@ tags = ["ccsd", "uba", "inauguración"]
 
 # Inauguración en el Palacio de la UBA
 
+![Acto inaugural del CCSD en el Palacio de la UBA](/images/apertura-ccsd.jpeg)
+
 **23 de octubre de 2025 · Palacio de la UBA, Arenales 1371**
 
 ## El Centro de Criptografía y Sistemas Distribuidos abrió sus puertas en la UBA

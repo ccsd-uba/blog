@@ -11,6 +11,8 @@ tags = ["ccsd", "devconnect", "ethereum"]
 
 # Presentación en DevCon
 
+![Pablo Deymonnaz presentando el CCSD en Devconnect Buenos Aires](/images/devconnect-ccsd.jpeg)
+
 **Noviembre 2025 · Devconnect Buenos Aires**
 
 ## El CCSD presentó sus líneas de trabajo en Devconnect 2025

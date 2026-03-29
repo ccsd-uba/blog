@@ -18,6 +18,3 @@ The Center for Cryptography and Distributed Systems at UBA is dedicated to the s
 
 If you'd like to learn more about the center or collaborate on a project, you can find us on [GitHub](https://github.com/ccsd-uba) or send us an email.
 
----
-
-*This blog is built with [Zola](https://www.getzola.org/), a static site generator written in Rust.*

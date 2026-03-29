@@ -1,3 +1,14 @@
++++
+title = "The CCSD in CriptoNoticias"
+description = "Coverage of the launch of the Center for Cryptography and Distributed Systems in CriptoNoticias."
+date = 2025-12-01
+
+[taxonomies]
+tags = ["ccsd", "press", "criptonoticias"]
+
+[extra]
++++
+
 # Post 03 — CriptoNoticias
 
 ## The CCSD in CriptoNoticias: Coverage of the Center Launch

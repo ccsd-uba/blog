@@ -1,3 +1,14 @@
++++
+title = "Inauguración en el Palacio de la UBA"
+description = "El Centro de Criptografía y Sistemas Distribuidos abrió sus puertas en la UBA el 23 de octubre de 2025."
+date = 2025-10-23
+
+[taxonomies]
+tags = ["ccsd", "uba", "inauguración"]
+
+[extra]
++++
+
 # Posteo 01 — Inauguración en el Palacio de la UBA
 
 **23 de octubre de 2025 · Palacio de la UBA, Arenales 1371**

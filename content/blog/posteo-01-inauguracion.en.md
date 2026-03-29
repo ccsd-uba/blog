@@ -1,3 +1,14 @@
++++
+title = "Inauguration at the UBA Palace"
+description = "The Center for Cryptography and Distributed Systems opened its doors at UBA on October 23, 2025."
+date = 2025-10-23
+
+[taxonomies]
+tags = ["ccsd", "uba", "inauguration"]
+
+[extra]
++++
+
 # Post 01 — Inauguration at the UBA Palace
 
 **October 23, 2025 · UBA Palace, Arenales 1371**

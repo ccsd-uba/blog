@@ -1,3 +1,14 @@
++++
+title = "Presentación en Devconnect 2025"
+description = "El CCSD presentó sus líneas de trabajo en Devconnect Buenos Aires, noviembre 2025."
+date = 2025-11-01
+
+[taxonomies]
+tags = ["ccsd", "devconnect", "ethereum"]
+
+[extra]
++++
+
 # Posteo 02 — Presentación en DevCon
 
 **Noviembre 2025 · Devconnect Buenos Aires**

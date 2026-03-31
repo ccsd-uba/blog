@@ -302,31 +302,24 @@
 
     /* ── TEAM ───────────────────────────────────────────────── */
     #team { background: var(--cream); }
-    .team-grid {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--r-l);
-      overflow: hidden; margin-top: 2.75rem;
-    }
+    .team-rows { margin-top: 2.75rem; border: 1px solid var(--border); border-radius: var(--r-l); overflow: hidden; }
+    .team-row { display: grid; gap: 1px; background: var(--border); }
+    .team-row.single { grid-template-columns: 1fr; }
+    .team-row.double { grid-template-columns: repeat(2, 1fr); }
+    .team-row.triple { grid-template-columns: repeat(3, 1fr); }
+    .team-row.quad { grid-template-columns: repeat(4, 1fr); }
     .m-card { background: var(--cream); padding: 1.75rem 1.5rem; transition: background .18s; }
     .m-card:hover { background: var(--cream-2); }
     .avatar {
       width: 48px; height: 48px; border-radius: 50%; margin-bottom: 1rem;
       background: var(--ink); display: grid; place-items: center;
       color: var(--cream); font-family: var(--serif); font-size: .95rem; font-weight: 300; font-style: italic;
+      overflow: hidden;
     }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
     .m-name { font-size: 14.5px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 3px; }
     .m-role { font-size: 11px; color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; margin-bottom: .55rem; }
     .m-focus { font-size: 12.5px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
-
-    .m-card.open {
-      background: transparent; display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start; min-height: 160px; cursor: pointer;
-    }
-    .m-card.open:hover { background: var(--cream-2); }
-    .open-plus { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; line-height: 1; color: var(--ink-3); margin-bottom: .4rem; }
-    .open-lbl { font-size: 13px; font-weight: 600; color: var(--ink); }
-    .open-sub { font-size: 12px; color: var(--green); margin-top: 3px; }
 
     /* ── NEWS ───────────────────────────────────────────────── */
     #news { background: var(--cream-2); border-top: 1px solid var(--border); }
@@ -382,7 +375,8 @@
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .about-code  { position: static; }
       .research-grid { grid-template-columns: 1fr 1fr; }
-      .team-grid   { grid-template-columns: 1fr 1fr; }
+      .team-row.triple { grid-template-columns: 1fr 1fr; }
+      .team-row.quad { grid-template-columns: 1fr 1fr; }
       .news-grid   { grid-template-columns: 1fr 1fr; }
       .obj-grid    { grid-template-columns: 1fr; }
     }
@@ -403,7 +397,7 @@
       .nav-toggle.active span:nth-child(2) { opacity: 0; }
       .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
       .hero-stats { gap: 2rem; flex-wrap: wrap; }
-      .research-grid, .team-grid, .news-grid { grid-template-columns: 1fr; }
+      .research-grid, .team-row.double, .team-row.triple, .team-row.quad, .news-grid { grid-template-columns: 1fr; }
       .proj-row { grid-template-columns: 10px 1fr; }
       .proj-row .chip { display: none; }
     }
@@ -676,29 +670,58 @@
     <h2 class="display">{{ trans(key="lp_team_title", lang=lang) }}</h2>
     <p class="body-text" style="max-width:480px; margin-bottom:0;">{{ trans(key="lp_team_subtitle", lang=lang) }}</p>
 
-    <div class="team-grid">
-      <div class="m-card">
-        <div class="avatar">PD</div>
-        <div class="m-name">Pablo A. Deymonnaz</div>
-        <div class="m-role">{{ trans(key="lp_team_pd_role", lang=lang) }}</div>
-        <div class="m-focus">{{ trans(key="lp_team_pd_focus", lang=lang) }}</div>
+    <div class="team-rows">
+      <div class="team-row single">
+        <div class="m-card">
+          <div class="avatar"><img src="/images/pablo-deymonnaz.jpg" alt="Pablo A. Deymonnaz"></div>
+          <div class="m-name">Pablo A. Deymonnaz</div>
+          <div class="m-role">{{ trans(key="lp_team_pd_role", lang=lang) }}</div>
+          <div class="m-focus">{{ trans(key="lp_team_pd_focus", lang=lang) }}</div>
+        </div>
       </div>
-      <div class="m-card">
-        <div class="avatar">DK</div>
-        <div class="m-name">Diego Kingston</div>
-        <div class="m-role">{{ trans(key="lp_team_dk_role", lang=lang) }}</div>
-        <div class="m-focus">{{ trans(key="lp_team_dk_focus", lang=lang) }}</div>
+      <div class="team-row single">
+        <div class="m-card">
+          <div class="avatar"><img src="/images/federico-carrone.jpg" alt="Federico Carrone"></div>
+          <div class="m-name">Federico Carrone</div>
+          <div class="m-role">{{ trans(key="lp_team_fc_role", lang=lang) }}</div>
+        </div>
       </div>
-      <div class="m-card">
-        <div class="avatar">+</div>
-        <div class="m-name">{{ trans(key="lp_team_researchers", lang=lang) }}</div>
-        <div class="m-role">{{ trans(key="lp_team_researchers_role", lang=lang) }}</div>
-        <div class="m-focus">{{ trans(key="lp_team_researchers_focus", lang=lang) }}</div>
+      <div class="team-row quad">
+        <div class="m-card">
+          <div class="avatar"><img src="/images/diego-kingston.jpg" alt="Diego Kingston"></div>
+          <div class="m-name">Diego Kingston</div>
+          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
+        </div>
+        <div class="m-card">
+          <div class="avatar"><img src="/images/martin-mereb.jpg" alt="Martín Mereb"></div>
+          <div class="m-name">Martín Mereb</div>
+          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
+        </div>
+        <div class="m-card">
+          <div class="avatar"><img src="/images/diego-garbervetsky.jpg" alt="Diego Garbervetsky"></div>
+          <div class="m-name">Diego Garbervetsky</div>
+          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
+        </div>
+        <div class="m-card">
+          <div class="avatar"><img src="/images/manuel-puebla.jpg" alt="Manuel Puebla"></div>
+          <div class="m-name">Manuel Puebla</div>
+          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
+        </div>
       </div>
-      <div class="m-card open" onclick="location.href='mailto:centro.criptografia@uba.ar'">
-        <div class="open-plus">+</div>
-        <div class="open-lbl">{{ trans(key="lp_team_join", lang=lang) }}</div>
-        <div class="open-sub">{{ trans(key="lp_team_join_sub", lang=lang) }} &rarr;</div>
+      <div style="padding: 1.5rem 1.5rem .5rem; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; background: var(--cream);">{{ trans(key="lp_team_support", lang=lang) }}</div>
+      <div class="team-row single">
+        <div class="m-card">
+          <div class="avatar"><img src="/images/sebastian-civallero.png" alt="Sebastián Civallero"></div>
+          <div class="m-name">Sebastián Civallero</div>
+          <div class="m-role">{{ trans(key="lp_team_sc_role", lang=lang) }}</div>
+        </div>
+      </div>
+      <div class="team-row single">
+        <div class="m-card">
+          <div class="avatar"><img src="/images/manuel-camejo.png" alt="Manuel Camejo"></div>
+          <div class="m-name">Manuel Camejo</div>
+          <div class="m-role">{{ trans(key="lp_team_mc_role", lang=lang) }}</div>
+        </div>
       </div>
     </div>
   </div>

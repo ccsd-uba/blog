@@ -14,6 +14,8 @@ El seminario tuvo como objetivo introducir las aplicaciones de la Teoría de Có
 
 El programa estuvo a cargo de Manuel Puebla, Profesor Adjunto en el Departamento de Matemática de FIUBA y titular de la cátedra Palacios-Puebla en el CBC, con formación en Matemática Pura e Ingeniería Electrónica por la UBA y más de dos décadas de experiencia docente. Sus intereses de investigación se orientan a la intersección entre geometría algebraica, teoría de códigos y probabilidad en altas dimensiones.
 
+![Manuel Puebla en el segundo encuentro del seminario, sobre cotas combinatorias y decodificación única con Berlekamp-Welch en Reed-Solomon](/images/seminario-codigos-manuel-puebla.jpeg)
+
 ## Articulación entre saberes, instituciones y sectores
 
 Uno de los aspectos más significativos de esta primera edición fue la forma en que se construyó: de manera colaborativa, integrando actores con tradiciones y lógicas distintas.

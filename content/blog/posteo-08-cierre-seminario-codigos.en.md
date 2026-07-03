@@ -14,6 +14,8 @@ The seminar aimed to introduce the applications of Linear Coding Theory to zero-
 
 The program was led by Manuel Puebla, Adjunct Professor at the Department of Mathematics of FIUBA and head of the Palacios-Puebla chair at the CBC, with a background in Pure Mathematics and Electronic Engineering from UBA and more than two decades of teaching experience. His research interests lie at the intersection of algebraic geometry, coding theory and high-dimensional probability.
 
+![Manuel Puebla at the second session of the seminar, on combinatorial bounds and unique decoding with Berlekamp-Welch on Reed-Solomon](/images/seminario-codigos-manuel-puebla.jpeg)
+
 ## Bringing together knowledge, institutions and sectors
 
 One of the most significant aspects of this first edition was the way it was built: collaboratively, integrating actors with different traditions and logics.

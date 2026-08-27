@@ -6,14 +6,14 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <title>
-    {% if page.title %}{{ page.title }} | {{ trans(key="blog_name", lang=lang) }}
-    {% elif section.title %}{{ section.title }} | {{ trans(key="blog_name", lang=lang) }}
+    {% if page is defined and page.title %}{{ page.title }} | {{ trans(key="blog_name", lang=lang) }}
+    {% elif section is defined and section.title %}{{ section.title }} | {{ trans(key="blog_name", lang=lang) }}
     {% else %}{{ trans(key="blog_name", lang=lang) }}
     {% endif %}
   </title>
   <meta name="description" content="
-    {%- if page.description %}{{ page.description }}
-    {%- elif section.description %}{{ section.description }}
+    {%- if page is defined and page.description %}{{ page.description }}
+    {%- elif section is defined and section.description %}{{ section.description }}
     {%- else %}{{ config.description }}
     {%- endif -%}
   " />

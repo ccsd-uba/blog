@@ -755,11 +755,10 @@
     </div>
 
     {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
-    {% set posts = blog_section.pages | slice(end=3) %}
 
-    {% if posts %}
+    {% if blog_section.pages %}
     <div class="news-grid">
-      {% for post in posts %}
+      {% for post in blog_section.pages %}{%- if loop.index0 < 3 %}
       <a href="{{ post.permalink }}" class="n-card">
         <div class="n-date">{{ post.date | date(format="%d %b %Y") }}</div>
         <div class="n-title">{{ post.title }}</div>
@@ -768,7 +767,7 @@
         {% endif %}
         <span class="n-arrow">&rarr;</span>
       </a>
-      {% endfor %}
+      {%- endif %}{% endfor %}
     </div>
     {% endif %}
   </div>

@@ -49,7 +49,8 @@
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     /* ── RESET ─────────────────────────────────────────────── */
@@ -57,503 +58,562 @@
 
     /* ── TOKENS ────────────────────────────────────────────── */
     :root {
-      --cream:      #f0ede4;
-      --cream-2:    #e8e4d9;
-      --cream-3:    #ddd9ce;
-      --ink:        #141413;
-      --ink-2:      #3d3c39;
-      --ink-3:      #7a7872;
-      --green:      #4a6827;
-      --green-2:    #6b8c3e;
-      --border:     rgba(20,20,19,.10);
-      --border-2:   rgba(20,20,19,.18);
-      --serif: 'Newsreader', 'Georgia', serif;
-      --sans:  'Inter', system-ui, sans-serif;
-      --r:   4px;
-      --r-l: 8px;
+      --ink:        #14161a;
+      --ink-2:      #3d4450;
+      --paper:      #f6f5f2;
+      --line:       #e0ddd6;
+      --card:       #fbfaf8;
+      --tag:        #eceae4;
+
+      /* Los hex son fallback: los navegadores sin oklch se quedan con ellos. */
+      --accent:     #1d8168;
+      --accent:     oklch(0.58 0.115 168);
+
+      /* Texto sobre las bandas oscuras */
+      --on-dark-lead: #a8b1ab;
+      --on-dark-body: #98a29b;
+      --on-dark-line: rgba(255,255,255,.16);
+
+      --code-fg:    #e7ece9;
+      --code-cmt:   #8b98a5;
+
+      --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+      --sans:  'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono:  'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+      --r-tag:  6px;
+      --r-md:  14px;
+      --r-lg:  16px;
+      --r-pill: 999px;
+
+      --t: 150ms ease;
     }
 
-    html  { scroll-behavior: smooth; }
-    body  {
+    html { scroll-behavior: smooth; }
+    body {
       font-family: var(--sans);
-      background: var(--cream);
+      background: var(--paper);
       color: var(--ink);
-      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
+    a { color: var(--accent); text-decoration: none; transition: color var(--t), background var(--t), border-color var(--t); }
+    ::selection { background: var(--accent); color: #fff; }
+    img { display: block; }
 
     /* ── UTILS ──────────────────────────────────────────────── */
-    .container { max-width: 1080px; margin: 0 auto; }
+    .wrap { max-width: 1320px; margin: 0 auto; }
+
+    .band {
+      padding: clamp(56px, 7vw, 110px) clamp(20px, 4vw, 64px);
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 60px;
+    }
+    .band-dark { background: var(--ink); color: var(--paper); border-bottom: 0; }
 
     .eyebrow {
-      font-family: var(--sans);
-      font-size: 11px;
-      letter-spacing: .16em;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--ink-3);
-      font-weight: 500;
-      margin-bottom: .75rem;
+      color: var(--ink-2);
     }
-    .eyebrow.accent { color: var(--green); }
+    .eyebrow.accent { color: var(--accent); }
 
     .display {
       font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 300;
+      font-size: clamp(30px, 3.6vw, 50px);
+      line-height: 1.08;
       letter-spacing: -.02em;
-      line-height: 1.12;
-      margin-bottom: 1rem;
     }
-    .display em { font-style: italic; color: var(--ink-2); }
+    .display em { font-style: italic; color: var(--accent); }
 
-    .body-text { color: var(--ink-2); font-size: .95rem; line-height: 1.78; }
+    .lead { font-size: 16.5px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+    .band-dark .lead { color: var(--on-dark-lead); }
 
-    .divider { height: 1px; background: var(--border); }
+    /* Cabecera de banda: eyebrow + título + lead */
+    .band-head { display: flex; flex-direction: column; gap: 16px; max-width: 760px; }
+
+    .mono-link {
+      align-self: flex-start;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: .06em;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 3px;
+    }
 
     .chip {
-      display: inline-block;
-      padding: 3px 10px;
-      border: 1px solid var(--border-2);
-      border-radius: 2px;
+      font-family: var(--mono);
       font-size: 11px;
-      letter-spacing: .04em;
+      padding: 5px 10px;
+      border-radius: var(--r-tag);
+      background: var(--tag);
       color: var(--ink-2);
-      font-weight: 500;
     }
-    .chip.green { border-color: var(--green); color: var(--green); }
 
     .btn {
       display: inline-block;
-      padding: 11px 22px;
-      border-radius: var(--r);
-      font-size: 14px;
+      padding: 14px 24px;
+      border-radius: var(--r-pill);
+      font-size: 14.5px;
       font-weight: 500;
-      text-decoration: none;
-      transition: opacity .18s, transform .18s;
     }
-    .btn-fill { background: var(--green); color: #fff; }
-    .btn-fill:hover { opacity: .88; transform: translateY(-1px); }
-    .btn-outline { border: 1px solid var(--border-2); color: var(--ink); }
-    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+    .btn-fill { background: var(--ink); color: var(--paper); }
+    .btn-fill:hover { background: var(--accent); color: #fff; }
+    .btn-outline { border: 1px solid var(--line); color: var(--ink); }
+    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
 
-    .section { padding: 96px 2.5rem; }
+    /* ── HEADER ─────────────────────────────────────────────── */
+    .site-head {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 32px;
+      padding: 14px clamp(20px, 4vw, 64px);
+      background: rgba(246,245,242,.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); }
+    .brand-mark {
+      display: grid; place-items: center;
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      background: var(--ink); color: var(--paper);
+      font-family: var(--mono); font-size: 14px; font-weight: 500;
+    }
+    .brand-name { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
 
-    .row-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 2.75rem;
+    .nav {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: clamp(14px, 2vw, 28px);
+      margin-left: auto;
+      font-size: 13.5px;
+      list-style: none;
     }
-    .see-all {
-      font-size: 13px;
-      color: var(--green);
-      text-decoration: none;
-      font-weight: 500;
-      transition: opacity .18s;
-    }
-    .see-all:hover { opacity: .7; }
+    .nav a { color: var(--ink-2); }
+    .nav a:hover { color: var(--ink); }
 
-    /* ── NAV ─────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 62px; padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(240,237,228,.88);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow .3s;
+    .lang-pill {
+      display: inline-flex; align-items: center;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-pill);
+      font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em;
+      color: var(--ink);
     }
-    nav.scrolled { box-shadow: 0 2px 20px rgba(20,20,19,.07); }
+    .lang-pill:hover { border-color: var(--ink); color: var(--ink); }
 
-    .nav-brand {
-      display: flex; align-items: center; gap: 11px;
-      text-decoration: none; color: var(--ink);
+    .nav-cta {
+      padding: 9px 16px;
+      border-radius: var(--r-pill);
+      background: var(--ink);
+      font-size: 13px; font-weight: 500;
     }
-    .nav-mark {
-      width: 28px; height: 28px; border-radius: var(--r);
-      background: var(--ink); display: grid; place-items: center;
-      color: var(--cream); font-family: var(--serif);
-      font-size: 14px; font-weight: 400; font-style: italic;
-    }
-    .nav-name { font-family: var(--sans); font-weight: 600; font-size: 14px; letter-spacing: -.01em; }
+    .nav .nav-cta { color: var(--paper); }
+    .nav .nav-cta:hover { background: var(--accent); color: #fff; }
 
-    .nav-links { list-style: none; display: flex; align-items: center; gap: 2rem; }
-    .nav-links a { color: var(--ink-2); text-decoration: none; font-size: 13.5px; font-weight: 400; transition: color .18s; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-links .cta {
-      padding: 7px 16px; border: 1px solid var(--border-2); border-radius: var(--r);
-      color: var(--ink) !important; font-weight: 500 !important;
-      transition: background .18s, border-color .18s !important;
+    /* Hamburguesa: el prototipo no resuelve el nav mobile, así que se conserva el del sitio */
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      flex-direction: column; gap: 4px;
+      background: none; border: 0; cursor: pointer;
+      padding: 6px;
     }
-    .nav-links .cta:hover { background: var(--ink); color: var(--cream) !important; border-color: var(--ink); }
+    .nav-toggle span { display: block; width: 20px; height: 1.5px; background: var(--ink); }
 
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--ink); margin: 4px 0; transition: transform .2s, opacity .2s; }
+    /* ── HERO ───────────────────────────────────────────────── */
+    #top {
+      padding: clamp(56px, 8vw, 120px) clamp(20px, 4vw, 64px) clamp(40px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: clamp(32px, 5vw, 72px);
+      align-items: end;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 26px; max-width: 720px; }
+    .hero-h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(40px, 6.2vw, 88px);
+      line-height: .98;
+      letter-spacing: -.025em;
+    }
+    .hero-h1 em { font-style: italic; color: var(--accent); }
+    .hero-lead {
+      max-width: 600px;
+      font-size: clamp(16px, 1.4vw, 19px);
+      line-height: 1.6;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 
-    /* ── HERO ─────────────────────────────────────────────────── */
-    #hero {
-      position: relative; min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 120px 2.5rem 100px;
-      text-align: center; background: var(--cream); overflow: hidden;
+    .hero-right { display: flex; flex-direction: column; gap: 22px; }
+    .dir-row { display: flex; align-items: center; gap: clamp(16px, 2.5vw, 32px); }
+    .dir-portraits { display: flex; align-items: center; }
+    .dir-portraits img {
+      width: clamp(76px, 8vw, 104px); height: clamp(76px, 8vw, 104px);
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.05);
+      border: 3px solid var(--paper);
+      box-shadow: 0 0 0 1px var(--line);
     }
-    #hero::before {
-      content: '';
-      position: absolute; width: 800px; height: 600px;
-      top: 50%; left: 50%; transform: translate(-50%, -55%);
-      background: radial-gradient(ellipse at center, rgba(74,104,39,.10) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    #hero-canvas { position: absolute; inset: 0; opacity: .18; pointer-events: none; }
+    .dir-portraits img + img { margin-left: -18px; }
+    .dir-meta { display: flex; flex-direction: column; gap: 6px; }
+    .dir-meta .eyebrow { font-size: 11px; }
+    .dir-names { font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 
-    .hero-label {
-      position: relative;
-      display: inline-flex; align-items: center; gap: 9px;
-      font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--ink-3); font-weight: 500; margin-bottom: 2.25rem;
+    .uba-row {
+      display: flex; align-items: baseline; gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    .hero-label::before {
-      content: ''; display: inline-block; width: 6px; height: 6px;
-      background: var(--green); border-radius: 50%;
-      animation: blink 2.4s ease-in-out infinite;
-    }
-    @keyframes blink { 0%, 100% { opacity:1; } 50% { opacity:.25; } }
+    /* El PNG del logo es RGB sin alfa: multiply funde su fondo blanco con el papel. */
+    .uba-row img { height: 44px; width: auto; mix-blend-mode: multiply; }
 
-    .hero-h {
-      position: relative; font-family: var(--serif);
-      font-size: clamp(3.2rem, 8vw, 6.8rem); font-weight: 300;
-      letter-spacing: -.03em; line-height: 1.0;
-      max-width: 900px; margin-bottom: 1.75rem;
+    /* ── ABOUT ──────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: clamp(32px, 5vw, 80px);
     }
-    .hero-h em { font-style: italic; color: var(--green); }
+    .about-text { display: flex; flex-direction: column; gap: 22px; }
+    .about-text p { font-size: 16px; line-height: 1.68; color: var(--ink-2); text-wrap: pretty; }
 
-    .hero-sub {
-      position: relative; font-size: 1.05rem; color: var(--ink-2);
-      max-width: 540px; line-height: 1.82; margin-bottom: 2.75rem; font-weight: 300;
+    .code-stack { display: flex; flex-direction: column; gap: 14px; }
+    .code-block {
+      padding: 22px;
+      border-radius: var(--r-md);
+      background: var(--ink);
+      color: var(--code-fg);
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.75;
+      overflow-x: auto;
     }
-
-    .hero-btns {
-      position: relative; display: flex; gap: .9rem; flex-wrap: wrap;
-      align-items: center; justify-content: center; margin-bottom: 5rem;
-    }
-
-    .hero-stats {
-      position: relative; display: flex; gap: 4rem;
-      border-top: 1px solid var(--border); padding-top: 2.5rem;
-    }
-    .stat { text-align: left; }
-    .stat-num {
-      font-family: var(--serif); font-size: 2.4rem; font-weight: 300;
-      letter-spacing: -.04em; line-height: 1; display: block;
-    }
-    .stat-lbl { font-size: 11.5px; color: var(--ink-3); letter-spacing: .06em; text-transform: uppercase; margin-top: 5px; }
-
-    /* ── ABOUT ─────────────────────────────────────────────── */
-    #about { background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .about-grid { display: grid; grid-template-columns: 5fr 4fr; gap: 6rem; align-items: start; }
-    .about-text .display { margin-bottom: 1.5rem; }
-    .about-text p { color: var(--ink-2); font-size: .97rem; line-height: 1.82; margin-bottom: 1.1rem; font-weight: 300; }
-    .about-text p:last-of-type { margin-bottom: 1.75rem; }
-
-    .about-code {
-      position: sticky; top: 80px; background: var(--ink); border-radius: var(--r-l);
-      padding: 2rem 2.2rem;
-      font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-      font-size: 12px; line-height: 1.95; color: rgba(240,237,228,.55); overflow: hidden;
-    }
-    .about-code::before {
-      content: '● ● ●'; display: block; font-size: 10px; letter-spacing: .3em;
-      color: rgba(240,237,228,.2); margin-bottom: 1.25rem;
-    }
-    .c-cmt { color: rgba(240,237,228,.28); }
-    .c-key { color: #8aba5c; }
-    .c-str { color: #7ec8a0; }
-    .c-num { color: #b8c0d0; }
-    .c-fn  { color: rgba(240,237,228,.75); }
-
-    /* ── RESEARCH ───────────────────────────────────────────── */
-    #research { background: var(--cream); }
-    .research-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--r-l);
-      overflow: hidden; margin-top: 2.75rem;
-    }
-    .r-card { background: var(--cream); padding: 2rem 1.85rem; transition: background .18s; }
-    .r-card:hover { background: var(--cream-2); }
-    .r-num { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: rgba(20,20,19,.12); line-height: 1; margin-bottom: 1rem; }
-    .r-title { font-size: .97rem; font-weight: 600; letter-spacing: -.01em; margin-bottom: .55rem; }
-    .r-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
-    .r-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 1.25rem; }
-
-    /* ── PROJECTS ───────────────────────────────────────────── */
-    #projects { background: var(--cream-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .proj-list { margin-top: .25rem; }
-    .proj-row {
-      display: grid; grid-template-columns: 10px 1fr auto;
-      align-items: center; gap: 2rem; padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border); transition: opacity .18s; cursor: default;
-    }
-    .proj-row:first-child { border-top: 1px solid var(--border); }
-    .proj-row:hover { opacity: .72; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: #3d9e6a; flex-shrink: 0; }
-    .dot.pause { background: #c8960a; }
-    .proj-name { font-family: var(--serif); font-weight: 400; font-size: 1.1rem; letter-spacing: -.01em; margin-bottom: 3px; }
-    .proj-desc { font-size: 13px; color: var(--ink-3); font-weight: 300; }
-
-    /* ── TEAM ───────────────────────────────────────────────── */
-    #team { background: var(--cream); }
-    .team-rows { margin-top: 2.75rem; border: 1px solid var(--border); border-radius: var(--r-l); overflow: hidden; }
-    .team-row { display: grid; gap: 1px; background: var(--border); }
-    .team-row.single { grid-template-columns: 1fr; }
-    .team-row.double { grid-template-columns: repeat(2, 1fr); }
-    .team-row.triple { grid-template-columns: repeat(3, 1fr); }
-    .team-row.quad { grid-template-columns: repeat(4, 1fr); }
-    .m-card { background: var(--cream); padding: 1.75rem 1.5rem; transition: background .18s; }
-    .m-card:hover { background: var(--cream-2); }
-    .avatar {
-      width: 48px; height: 48px; border-radius: 50%; margin-bottom: 1rem;
-      background: var(--ink); display: grid; place-items: center;
-      color: var(--cream); font-family: var(--serif); font-size: .95rem; font-weight: 300; font-style: italic;
-      overflow: hidden;
-    }
-    .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .m-name { font-size: 14.5px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 3px; }
-    .m-role { font-size: 11px; color: var(--ink-3); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; margin-bottom: .55rem; }
-    .m-focus { font-size: 12.5px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
-
-    /* ── NEWS ───────────────────────────────────────────────── */
-    #news { background: var(--cream-2); border-top: 1px solid var(--border); }
-    .news-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--r-l);
-      overflow: hidden; margin-top: .25rem;
-    }
-    .n-card { display: block; background: var(--cream-2); padding: 2rem 1.85rem; text-decoration: none; color: var(--ink); transition: background .18s; }
-    .n-card:hover { background: var(--cream-3); }
-    .n-date { font-size: 11px; color: var(--ink-3); letter-spacing: .08em; margin-bottom: .9rem; }
-    .n-cat { display: inline-block; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--green); margin-bottom: .6rem; }
-    .n-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; letter-spacing: -.01em; line-height: 1.38; margin-bottom: .6rem; }
-    .n-excerpt { font-size: 13px; color: var(--ink-2); line-height: 1.68; font-weight: 300; }
-    .n-arrow { display: inline-block; margin-top: 1.25rem; font-size: 18px; color: var(--ink-3); transition: transform .18s, color .18s; }
-    .n-card:hover .n-arrow { transform: translateX(4px); color: var(--green); }
+    .c-cmt { color: var(--code-cmt); }
 
     /* ── OBJETIVOS ──────────────────────────────────────────── */
-    #objetivos { background: var(--cream); border-top: 1px solid var(--border); }
+    .band-stack { display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px); }
     .obj-grid {
-      display: grid; grid-template-columns: repeat(2,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--r-l);
-      overflow: hidden; margin-top: 2.75rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: clamp(16px, 2vw, 20px);
     }
-    .obj-card { background: var(--cream); padding: 2rem 1.85rem; transition: background .18s; }
-    .obj-card:hover { background: var(--cream-2); }
-    .obj-num { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: rgba(20,20,19,.12); margin-bottom: .75rem; }
-    .obj-title { font-size: .97rem; font-weight: 600; margin-bottom: .45rem; }
-    .obj-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
+    .obj-card {
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 28px 26px;
+      border: 1px solid var(--on-dark-line);
+      border-radius: var(--r-md);
+    }
+    .obj-num { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+    .obj-title { font-size: 17px; font-weight: 500; line-height: 1.3; }
+    .obj-desc { font-size: 14.5px; line-height: 1.6; color: var(--on-dark-body); text-wrap: pretty; }
 
-    /* ── CTA STRIP ─────────────────────────────────────────── */
-    #cta-strip { background: var(--ink); padding: 80px 2.5rem; text-align: center; }
-    .cta-h { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; color: var(--cream); letter-spacing: -.02em; line-height: 1.15; margin-bottom: 1rem; }
-    .cta-h em { font-style: italic; color: var(--green-2); }
-    .cta-sub { color: rgba(240,237,228,.55); font-size: .95rem; font-weight: 300; margin-bottom: 2.5rem; }
-    .btn-cream { display: inline-block; padding: 12px 28px; background: var(--cream); color: var(--ink); border-radius: var(--r); font-weight: 600; font-size: 14px; text-decoration: none; transition: opacity .18s; }
-    .btn-cream:hover { opacity: .88; }
+    /* ── RESEARCH ───────────────────────────────────────────── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(16px, 2vw, 24px);
+    }
+    .r-card {
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 28px 26px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      transition: border-color var(--t);
+    }
+    .r-card:hover { border-color: var(--accent); }
+    .r-num { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+    .r-title { font-size: 19px; font-weight: 500; line-height: 1.3; }
+    .r-desc { font-size: 14.5px; line-height: 1.62; color: var(--ink-2); text-wrap: pretty; }
+    .r-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
+
+    /* ── PROJECTS ───────────────────────────────────────────── */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: clamp(32px, 5vw, 80px);
+    }
+    .proj-intro { display: flex; flex-direction: column; gap: 16px; }
+    .proj-intro .lead { max-width: 460px; }
+    .proj-list { display: flex; flex-direction: column; }
+    .proj-row {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .proj-row:first-child { border-top: 1px solid var(--line); }
+    .proj-name { flex: 1 1 220px; font-size: 20px; font-weight: 500; line-height: 1.3; }
+    .proj-pill {
+      flex: 0 0 auto;
+      padding: 5px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-pill);
+      font-family: var(--mono); font-size: 11px;
+      color: var(--ink-2);
+      white-space: nowrap;
+    }
+    .proj-desc { flex: 1 1 100%; font-size: 14.5px; line-height: 1.62; color: var(--ink-2); text-wrap: pretty; }
+
+    /* ── TEAM ───────────────────────────────────────────────── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: clamp(16px, 2vw, 24px);
+    }
+    .t-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+    }
+    .t-card img {
+      flex: 0 0 52px;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line);
+    }
+    .t-meta { display: flex; flex-direction: column; gap: 3px; }
+    .t-name  { font-size: 14.5px; font-weight: 500; }
+    .t-role  { font-size: 12.5px; line-height: 1.4; color: var(--accent); }
+    .t-focus { font-size: 12px;   line-height: 1.4; color: var(--ink-2); }
+
+    .support-block { display: flex; flex-direction: column; gap: clamp(16px, 2vw, 24px); }
+    .support-label {
+      font-family: var(--mono);
+      font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ink-2);
+    }
+
+    /* ── BLOG ───────────────────────────────────────────────── */
+    .blog-stack { display: flex; flex-direction: column; gap: clamp(28px, 3vw, 44px); }
+    .blog-head {
+      display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px;
+    }
+    .blog-head-left { display: flex; flex-direction: column; gap: 14px; }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(16px, 2vw, 24px);
+    }
+    .n-card {
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 26px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      color: var(--ink);
+      transition: border-color var(--t);
+    }
+    .n-card:hover { border-color: var(--accent); color: var(--ink); }
+    .n-date { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; color: var(--ink-2); }
+    .n-title {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 22px; line-height: 1.2; letter-spacing: -.01em;
+    }
+    .n-excerpt { font-size: 14px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+    .n-arrow { margin-top: auto; font-family: var(--mono); font-size: 13px; color: var(--accent); }
+
+    /* ── CONTACT ────────────────────────────────────────────── */
+    #contact { padding: clamp(64px, 8vw, 130px) clamp(20px, 4vw, 64px); scroll-margin-top: 60px; }
+    .contact-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 28px;
+    }
+    .contact-h {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(32px, 4.6vw, 64px);
+      line-height: 1.05; letter-spacing: -.025em;
+    }
+    .contact-h em { font-style: italic; color: var(--accent); }
+    .contact-lead { max-width: 620px; font-size: 17px; line-height: 1.6; color: var(--on-dark-lead); text-wrap: pretty; }
+    .btn-paper {
+      padding: 15px 26px;
+      border-radius: var(--r-pill);
+      background: var(--paper); color: var(--ink);
+      font-family: var(--mono); font-size: 14px;
+    }
+    .btn-paper:hover { background: var(--accent); color: #fff; }
 
     /* ── FOOTER ─────────────────────────────────────────────── */
-    footer { background: var(--ink); border-top: 1px solid rgba(240,237,228,.08); padding: 2.5rem 2.5rem; }
-    .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem; }
-    .footer-brand { font-family: var(--serif); color: var(--cream); font-size: 1rem; font-weight: 300; font-style: italic; }
-    .footer-brand small { display: block; font-weight: 400; font-size: 12px; color: rgba(240,237,228,.4); margin-top: 3px; font-style: normal; font-family: var(--sans); }
-    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
-    .footer-links a { color: rgba(240,237,228,.4); text-decoration: none; font-size: 13px; transition: color .18s; }
-    .footer-links a:hover { color: var(--cream); }
-    .footer-copy { font-size: 12px; color: rgba(240,237,228,.3); }
+    .site-foot { padding: clamp(40px, 4vw, 64px) clamp(20px, 4vw, 64px); background: var(--paper); }
+    .foot-inner {
+      display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 32px;
+    }
+    .foot-left { display: flex; flex-direction: column; gap: 12px; max-width: 420px; }
+    .foot-brand { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+    .foot-copy { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 14px 32px; font-size: 13.5px; }
+    .foot-links a { color: var(--ink-2); }
+    .foot-links a:hover { color: var(--ink); }
 
     /* ── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-code  { position: static; }
-      .research-grid { grid-template-columns: 1fr 1fr; }
-      .team-row.triple { grid-template-columns: 1fr 1fr; }
-      .team-row.quad { grid-template-columns: 1fr 1fr; }
-      .news-grid   { grid-template-columns: 1fr 1fr; }
-      .obj-grid    { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      nav { padding: 0 1.25rem; }
-      .nav-toggle { display: block; }
-      .nav-links {
-        display: none; flex-direction: column; gap: 0;
-        position: absolute; top: 62px; left: 0; right: 0;
-        background: rgba(240,237,228,.97); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem 1.25rem;
+    @media (max-width: 860px) {
+      .nav-toggle { display: flex; }
+      .nav {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; align-items: flex-start;
+        gap: 18px;
+        margin: 0;
+        padding: 20px clamp(20px, 4vw, 64px) 26px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
       }
-      .nav-links.open { display: flex; }
-      .nav-links li { padding: .5rem 0; }
-      .nav-links a { font-size: 15px; }
-      .nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
-      .nav-toggle.active span:nth-child(2) { opacity: 0; }
-      .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
-      .hero-stats { gap: 2rem; flex-wrap: wrap; }
-      .research-grid, .team-row.double, .team-row.triple, .team-row.quad, .news-grid { grid-template-columns: 1fr; }
-      .proj-row { grid-template-columns: 10px 1fr; }
-      .proj-row .chip { display: none; }
+      .nav.open { display: flex; }
+      .site-head { position: sticky; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══ NAV ══════════════════════════════════════════════════ -->
-<nav id="navbar">
-  <a href="#" class="nav-brand">
-    <div class="nav-mark">C</div>
-    <span class="nav-name">CCSD</span>
+<!-- ══ HEADER ═════════════════════════════════════════════════ -->
+<header class="site-head">
+  <a href="#top" class="brand">
+    <span class="brand-mark">C</span>
+    <span class="brand-name">CCSD</span>
   </a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav-links" id="nav-menu">
-    <li><a href="#about">{{ trans(key="lp_nav_about", lang=lang) }}</a></li>
-    <li><a href="#research">{{ trans(key="lp_nav_research", lang=lang) }}</a></li>
-    <li><a href="#projects">{{ trans(key="lp_nav_projects", lang=lang) }}</a></li>
-    <li><a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a></li>
-    <li><a href="{{ get_url(path='blog', lang=lang) }}">Blog</a></li>
-    <li><a href="#contact" class="cta">{{ trans(key="lp_nav_contact", lang=lang) }}</a></li>
-    <li>{% if lang == "es" %}<a href="/en/">EN</a>{% else %}<a href="/">ES</a>{% endif %}</li>
-  </ul>
-</nav>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-menu"><span></span><span></span><span></span></button>
+  <nav class="nav" id="nav-menu">
+    <a href="#about">{{ trans(key="lp_nav_about", lang=lang) }}</a>
+    <a href="#research">{{ trans(key="lp_nav_research", lang=lang) }}</a>
+    <a href="#projects">{{ trans(key="lp_nav_projects", lang=lang) }}</a>
+    <a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a>
+    <a href="{{ get_url(path='blog', lang=lang) }}">Blog</a>
+    {% if lang == "es" %}<a href="/en/" class="lang-pill">EN</a>{% else %}<a href="/" class="lang-pill">ES</a>{% endif %}
+    <a href="#contact" class="nav-cta">{{ trans(key="lp_nav_contact", lang=lang) }}</a>
+  </nav>
+</header>
 
-<!-- ══ HERO ══════════════════════════════════════════════════ -->
-<section id="hero">
-  <canvas id="hero-canvas"></canvas>
+<!-- ══ HERO ═══════════════════════════════════════════════════ -->
+<section id="top">
+  <div class="wrap hero-grid">
 
-  <div class="hero-label">{{ trans(key="lp_hero_label", lang=lang) }}</div>
-
-  <h1 class="hero-h">
-    {{ trans(key="lp_hero_h1", lang=lang) }} <em>{{ trans(key="lp_hero_h1_em", lang=lang) }}</em><br>
-    {{ trans(key="lp_hero_h1_end", lang=lang) }}
-  </h1>
-
-  <p class="hero-sub">
-    {{ trans(key="lp_hero_sub", lang=lang) }}
-  </p>
-
-  <div class="hero-btns">
-    <a href="#research" class="btn btn-fill">{{ trans(key="lp_hero_btn_research", lang=lang) }}</a>
-    <a href="#about"    class="btn btn-outline">{{ trans(key="lp_hero_btn_about", lang=lang) }} &rarr;</a>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num" data-target="6">0</span>
-      <span class="stat-lbl">{{ trans(key="lp_stat_research", lang=lang) }}</span>
+    <div class="hero-left">
+      <span class="eyebrow">{{ trans(key="lp_hero_label", lang=lang) }}</span>
+      <h1 class="hero-h1">
+        {{ trans(key="lp_hero_h1", lang=lang) }} <em>{{ trans(key="lp_hero_h1_em", lang=lang) }}</em> {{ trans(key="lp_hero_h1_end", lang=lang) }}
+      </h1>
+      <p class="hero-lead">{{ trans(key="lp_hero_sub", lang=lang) }}</p>
+      <div class="hero-btns">
+        <a href="#research" class="btn btn-fill">{{ trans(key="lp_hero_btn_research", lang=lang) }}</a>
+        <a href="#about" class="btn btn-outline">{{ trans(key="lp_hero_btn_about", lang=lang) }} &rarr;</a>
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-num" data-target="3">0</span>
-      <span class="stat-lbl">{{ trans(key="lp_stat_events", lang=lang) }}</span>
+
+    <div class="hero-right">
+      <div class="dir-row">
+        <div class="dir-portraits">
+          <img src="/images/pablo-deymonnaz.jpg" alt="Pablo A. Deymonnaz" width="104" height="104" loading="lazy">
+          <img src="/images/diego-kingston.jpg" alt="Diego Kingston" width="104" height="104" loading="lazy">
+          <img src="/images/federico-carrone.jpg" alt="Federico Carrone" width="104" height="104" loading="lazy">
+        </div>
+        <div class="dir-meta">
+          <span class="eyebrow accent">{{ trans(key="lp_hero_directors", lang=lang) }}</span>
+          <span class="dir-names">Pablo A. Deymonnaz &middot; Diego Kingston &middot; Federico Carrone</span>
+        </div>
+      </div>
+      <div class="uba-row">
+        <img src="/images/uba-investigacion-logo.png" alt="UBA Investigación — Secretaría de Ciencia y Técnica" width="147" height="44" loading="lazy">
+      </div>
     </div>
-    <div class="stat">
-      <span class="stat-num" data-target="2">0</span>
-      <span class="stat-lbl">{{ trans(key="lp_stat_directors", lang=lang) }}</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num" data-target="1">0</span>
-      <span class="stat-lbl">{{ trans(key="lp_stat_university", lang=lang) }}</span>
-    </div>
+
   </div>
 </section>
-
-<div class="divider"></div>
 
 <!-- ══ ABOUT ══════════════════════════════════════════════════ -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="about-grid">
+<section id="about" class="band">
+  <div class="wrap about-grid">
 
-      <div class="about-text">
-        <div class="eyebrow">{{ trans(key="lp_about_eyebrow", lang=lang) }}</div>
-        <h2 class="display">{{ trans(key="lp_about_title", lang=lang) | safe }}</h2>
-        <p>{{ trans(key="lp_about_p1", lang=lang) }}</p>
-        <p>{{ trans(key="lp_about_p2", lang=lang) }}</p>
-        <p>{{ trans(key="lp_about_p3", lang=lang) }}</p>
-        <a href="#objetivos" class="btn btn-fill" style="margin-top:.5rem;">{{ trans(key="lp_about_btn", lang=lang) }} &rarr;</a>
-      </div>
-
-      <div class="about-code">
-<span class="c-cmt">{{ trans(key="lp_about_code_cmt1", lang=lang) }}</span>
-<span class="c-key">fn</span> <span class="c-fn">commit</span>(x: Field, r: Scalar) → G {
-  <span class="c-key">return</span> G·<span class="c-num">x</span> + H·<span class="c-num">r</span>
-}
-
-<span class="c-cmt">{{ trans(key="lp_about_code_cmt2", lang=lang) }}</span>
-<span class="c-key">fn</span> <span class="c-fn">verify</span>(π, x_pub) → bool {
-  e(A, B)
-    == e(α, β)
-     · e(<span class="c-fn">L</span>(x_pub), γ)
-     · e(C, δ)
-}
-
-<span class="c-cmt">{{ trans(key="lp_about_code_cmt3", lang=lang) }}</span>
-<span class="c-key">assert</span> ∀ {{ trans(key="lp_about_code_assert", lang=lang) }} A, B:
-  <span class="c-fn">decidido</span>(A, v) ∧ <span class="c-fn">decidido</span>(B, w)
-    → v = w
-      </div>
-
+    <div class="about-text">
+      <span class="eyebrow accent">{{ trans(key="lp_about_eyebrow", lang=lang) }}</span>
+      <h2 class="display">{{ trans(key="lp_about_title", lang=lang) | safe }}</h2>
+      <p>{{ trans(key="lp_about_p1", lang=lang) }}</p>
+      <p>{{ trans(key="lp_about_p2", lang=lang) }}</p>
+      <p>{{ trans(key="lp_about_p3", lang=lang) }}</p>
+      <a href="#objetivos" class="mono-link">{{ trans(key="lp_about_btn", lang=lang) }} &rarr;</a>
     </div>
+
+    <div class="code-stack">
+<pre class="code-block"><span class="c-cmt">{{ trans(key="lp_about_code_cmt1", lang=lang) }}</span>
+fn commit(x: Field, r: Scalar) → G {
+  return G·x + H·r
+}</pre>
+<pre class="code-block"><span class="c-cmt">{{ trans(key="lp_about_code_cmt2", lang=lang) }}</span>
+fn verify(π, x_pub) → bool {
+  e(A, B) == e(α, β) · e(L(x_pub), γ) · e(C, δ)
+}</pre>
+<pre class="code-block"><span class="c-cmt">{{ trans(key="lp_about_code_cmt3", lang=lang) }}</span>
+assert ∀ {{ trans(key="lp_about_code_assert", lang=lang) }} A, B:
+  decidido(A, v) ∧ decidido(B, w) → v = w</pre>
+    </div>
+
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ══ OBJETIVOS ══════════════════════════════════════════════ -->
-<section id="objetivos" class="section">
-  <div class="container">
-    <div class="eyebrow accent">{{ trans(key="lp_obj_eyebrow", lang=lang) }}</div>
-    <h2 class="display">{{ trans(key="lp_obj_title", lang=lang) | safe }}</h2>
-    <p class="body-text" style="max-width:520px;">{{ trans(key="lp_obj_subtitle", lang=lang) }}</p>
+<section id="objetivos" class="band band-dark">
+  <div class="wrap band-stack">
+
+    <div class="band-head">
+      <span class="eyebrow accent">{{ trans(key="lp_obj_eyebrow", lang=lang) }}</span>
+      <h2 class="display">{{ trans(key="lp_obj_title", lang=lang) | safe }}</h2>
+      <p class="lead">{{ trans(key="lp_obj_subtitle", lang=lang) }}</p>
+    </div>
 
     <div class="obj-grid">
       <div class="obj-card">
-        <div class="obj-num">01</div>
-        <div class="obj-title">{{ trans(key="lp_obj1_title", lang=lang) }}</div>
-        <div class="obj-desc">{{ trans(key="lp_obj1_desc", lang=lang) }}</div>
+        <span class="obj-num">01</span>
+        <h3 class="obj-title">{{ trans(key="lp_obj1_title", lang=lang) }}</h3>
+        <p class="obj-desc">{{ trans(key="lp_obj1_desc", lang=lang) }}</p>
       </div>
       <div class="obj-card">
-        <div class="obj-num">02</div>
-        <div class="obj-title">{{ trans(key="lp_obj2_title", lang=lang) }}</div>
-        <div class="obj-desc">{{ trans(key="lp_obj2_desc", lang=lang) }}</div>
+        <span class="obj-num">02</span>
+        <h3 class="obj-title">{{ trans(key="lp_obj2_title", lang=lang) }}</h3>
+        <p class="obj-desc">{{ trans(key="lp_obj2_desc", lang=lang) }}</p>
       </div>
       <div class="obj-card">
-        <div class="obj-num">03</div>
-        <div class="obj-title">{{ trans(key="lp_obj3_title", lang=lang) }}</div>
-        <div class="obj-desc">{{ trans(key="lp_obj3_desc", lang=lang) }}</div>
+        <span class="obj-num">03</span>
+        <h3 class="obj-title">{{ trans(key="lp_obj3_title", lang=lang) }}</h3>
+        <p class="obj-desc">{{ trans(key="lp_obj3_desc", lang=lang) }}</p>
       </div>
       <div class="obj-card">
-        <div class="obj-num">04</div>
-        <div class="obj-title">{{ trans(key="lp_obj4_title", lang=lang) }}</div>
-        <div class="obj-desc">{{ trans(key="lp_obj4_desc", lang=lang) }}</div>
+        <span class="obj-num">04</span>
+        <h3 class="obj-title">{{ trans(key="lp_obj4_title", lang=lang) }}</h3>
+        <p class="obj-desc">{{ trans(key="lp_obj4_desc", lang=lang) }}</p>
       </div>
     </div>
+
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ══ RESEARCH ═══════════════════════════════════════════════ -->
+<section id="research" class="band">
+  <div class="wrap band-stack">
 
-<!-- ══ RESEARCH ══════════════════════════════════════════════ -->
-<section id="research" class="section">
-  <div class="container">
-    <div class="eyebrow accent">{{ trans(key="lp_research_eyebrow", lang=lang) }}</div>
-    <h2 class="display">{{ trans(key="lp_research_title", lang=lang) }}</h2>
-    <p class="body-text" style="max-width:540px;">{{ trans(key="lp_research_subtitle", lang=lang) }}</p>
+    <div class="band-head" style="max-width:780px;">
+      <span class="eyebrow accent">{{ trans(key="lp_research_eyebrow", lang=lang) }}</span>
+      <h2 class="display">{{ trans(key="lp_research_title", lang=lang) }}</h2>
+      <p class="lead">{{ trans(key="lp_research_subtitle", lang=lang) }}</p>
+    </div>
 
     <div class="research-grid">
 
       <div class="r-card">
-        <div class="r-num">01</div>
-        <div class="r-title">{{ trans(key="lp_r1_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r1_desc", lang=lang) }}</div>
+        <span class="r-num">01</span>
+        <h3 class="r-title">{{ trans(key="lp_r1_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r1_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">Lattices</span>
           <span class="chip">NIST PQC</span>
@@ -562,9 +622,9 @@
       </div>
 
       <div class="r-card">
-        <div class="r-num">02</div>
-        <div class="r-title">{{ trans(key="lp_r2_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r2_desc", lang=lang) }}</div>
+        <span class="r-num">02</span>
+        <h3 class="r-title">{{ trans(key="lp_r2_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r2_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">Lightweight</span>
           <span class="chip">AES</span>
@@ -573,9 +633,9 @@
       </div>
 
       <div class="r-card">
-        <div class="r-num">03</div>
-        <div class="r-title">{{ trans(key="lp_r3_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r3_desc", lang=lang) }}</div>
+        <span class="r-num">03</span>
+        <h3 class="r-title">{{ trans(key="lp_r3_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r3_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">Smart Contracts</span>
           <span class="chip">Audit</span>
@@ -584,9 +644,9 @@
       </div>
 
       <div class="r-card">
-        <div class="r-num">04</div>
-        <div class="r-title">{{ trans(key="lp_r4_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r4_desc", lang=lang) }}</div>
+        <span class="r-num">04</span>
+        <h3 class="r-title">{{ trans(key="lp_r4_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r4_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">BFT</span>
           <span class="chip">PoS</span>
@@ -595,9 +655,9 @@
       </div>
 
       <div class="r-card">
-        <div class="r-num">05</div>
-        <div class="r-title">{{ trans(key="lp_r5_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r5_desc", lang=lang) }}</div>
+        <span class="r-num">05</span>
+        <h3 class="r-title">{{ trans(key="lp_r5_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r5_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">IoT</span>
           <span class="chip">TLS</span>
@@ -606,9 +666,9 @@
       </div>
 
       <div class="r-card">
-        <div class="r-num">06</div>
-        <div class="r-title">{{ trans(key="lp_r6_title", lang=lang) }}</div>
-        <div class="r-desc">{{ trans(key="lp_r6_desc", lang=lang) }}</div>
+        <span class="r-num">06</span>
+        <h3 class="r-title">{{ trans(key="lp_r6_title", lang=lang) }}</h3>
+        <p class="r-desc">{{ trans(key="lp_r6_desc", lang=lang) }}</p>
         <div class="r-tags">
           <span class="chip">MPC</span>
           <span class="chip">Federated Learning</span>
@@ -620,138 +680,140 @@
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ══ PROJECTS ═══════════════════════════════════════════════ -->
+<section id="projects" class="band">
+  <div class="wrap proj-grid">
 
-<!-- ══ PROJECTS ══════════════════════════════════════════════ -->
-<section id="projects" class="section">
-  <div class="container">
-    <div class="row-head">
-      <div>
-        <div class="eyebrow accent">{{ trans(key="lp_proj_eyebrow", lang=lang) }}</div>
-        <h2 class="display" style="margin-bottom:0;">{{ trans(key="lp_proj_title", lang=lang) }}</h2>
-      </div>
+    <div class="proj-intro">
+      <span class="eyebrow accent">{{ trans(key="lp_proj_eyebrow", lang=lang) }}</span>
+      <h2 class="display">{{ trans(key="lp_proj_title", lang=lang) }}</h2>
+      <p class="lead">{{ trans(key="lp_proj_subtitle", lang=lang) }}</p>
     </div>
-
-    <p class="body-text" style="max-width:600px; margin-bottom:2.5rem;">{{ trans(key="lp_proj_subtitle", lang=lang) }}</p>
 
     <div class="proj-list">
       <div class="proj-row">
-        <div class="dot pause"></div>
-        <div>
-          <div class="proj-name">{{ trans(key="lp_proj1_name", lang=lang) }}</div>
-          <div class="proj-desc">{{ trans(key="lp_proj1_desc", lang=lang) }}</div>
-        </div>
-        <span class="chip">{{ trans(key="lp_proj1_chip", lang=lang) }}</span>
+        <h3 class="proj-name">{{ trans(key="lp_proj1_name", lang=lang) }}</h3>
+        <span class="proj-pill">{{ trans(key="lp_proj1_chip", lang=lang) }}</span>
+        <p class="proj-desc">{{ trans(key="lp_proj1_desc", lang=lang) }}</p>
       </div>
       <div class="proj-row">
-        <div class="dot pause"></div>
-        <div>
-          <div class="proj-name">{{ trans(key="lp_proj2_name", lang=lang) }}</div>
-          <div class="proj-desc">{{ trans(key="lp_proj2_desc", lang=lang) }}</div>
-        </div>
-        <span class="chip">{{ trans(key="lp_proj2_chip", lang=lang) }}</span>
+        <h3 class="proj-name">{{ trans(key="lp_proj2_name", lang=lang) }}</h3>
+        <span class="proj-pill">{{ trans(key="lp_proj2_chip", lang=lang) }}</span>
+        <p class="proj-desc">{{ trans(key="lp_proj2_desc", lang=lang) }}</p>
       </div>
       <div class="proj-row">
-        <div class="dot pause"></div>
-        <div>
-          <div class="proj-name">{{ trans(key="lp_proj3_name", lang=lang) }}</div>
-          <div class="proj-desc">{{ trans(key="lp_proj3_desc", lang=lang) }}</div>
-        </div>
-        <span class="chip">{{ trans(key="lp_proj3_chip", lang=lang) }}</span>
+        <h3 class="proj-name">{{ trans(key="lp_proj3_name", lang=lang) }}</h3>
+        <span class="proj-pill">{{ trans(key="lp_proj3_chip", lang=lang) }}</span>
+        <p class="proj-desc">{{ trans(key="lp_proj3_desc", lang=lang) }}</p>
       </div>
     </div>
+
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ══ TEAM ═══════════════════════════════════════════════════ -->
+<section id="team" class="band">
+  <div class="wrap band-stack">
 
-<!-- ══ TEAM ══════════════════════════════════════════════════ -->
-<section id="team" class="section">
-  <div class="container">
-    <div class="eyebrow accent">{{ trans(key="lp_team_eyebrow", lang=lang) }}</div>
-    <h2 class="display">{{ trans(key="lp_team_title", lang=lang) }}</h2>
-    <p class="body-text" style="max-width:480px; margin-bottom:0;">{{ trans(key="lp_team_subtitle", lang=lang) }}</p>
+    <div class="band-head" style="max-width:720px;">
+      <span class="eyebrow accent">{{ trans(key="lp_team_eyebrow", lang=lang) }}</span>
+      <h2 class="display">{{ trans(key="lp_team_title", lang=lang) }}</h2>
+      <p class="lead">{{ trans(key="lp_team_subtitle", lang=lang) }}</p>
+    </div>
 
-    <div class="team-rows">
-      <div class="team-row double">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/pablo-deymonnaz.jpg" alt="Pablo A. Deymonnaz"></div>
-          <div class="m-name">Pablo A. Deymonnaz</div>
-          <div class="m-role">{{ trans(key="lp_team_pd_role", lang=lang) }}</div>
-          <div class="m-focus">{{ trans(key="lp_team_pd_focus", lang=lang) }}</div>
-        </div>
-        <div class="m-card">
-          <div class="avatar"><img src="/images/diego-kingston.jpg" alt="Diego Kingston"></div>
-          <div class="m-name">Diego Kingston</div>
-          <div class="m-role">{{ trans(key="lp_team_dk_role", lang=lang) }}</div>
+    <div class="team-grid">
+      <div class="t-card">
+        <img src="/images/pablo-deymonnaz.jpg" alt="Pablo A. Deymonnaz" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Pablo A. Deymonnaz</span>
+          <span class="t-role">{{ trans(key="lp_team_pd_role", lang=lang) }}</span>
+          <span class="t-focus">{{ trans(key="lp_team_pd_focus", lang=lang) }}</span>
         </div>
       </div>
-      <div class="team-row single">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/federico-carrone.jpg" alt="Federico Carrone"></div>
-          <div class="m-name">Federico Carrone</div>
-          <div class="m-role">{{ trans(key="lp_team_fc_role", lang=lang) }}</div>
+      <div class="t-card">
+        <img src="/images/diego-kingston.jpg" alt="Diego Kingston" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Diego Kingston</span>
+          <span class="t-role">{{ trans(key="lp_team_dk_role", lang=lang) }}</span>
         </div>
       </div>
-      <div class="team-row quad">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/mauro-toscano.png" alt="Mauro Toscano"></div>
-          <div class="m-name">Mauro Toscano</div>
-          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
-        </div>
-        <div class="m-card">
-          <div class="avatar"><img src="/images/manuel-puebla.jpg" alt="Manuel Puebla"></div>
-          <div class="m-name">Manuel Puebla</div>
-          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
-        </div>
-        <div class="m-card">
-          <div class="avatar"><img src="/images/martin-mereb.jpg" alt="Martín Mereb"></div>
-          <div class="m-name">Martín Mereb</div>
-          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
-        </div>
-        <div class="m-card">
-          <div class="avatar"><img src="/images/diego-garbervetsky.jpg" alt="Diego Garbervetsky"></div>
-          <div class="m-name">Diego Garbervetsky</div>
-          <div class="m-role">{{ trans(key="lp_team_comite", lang=lang) }}</div>
+      <div class="t-card">
+        <img src="/images/federico-carrone.jpg" alt="Federico Carrone" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Federico Carrone</span>
+          <span class="t-role">{{ trans(key="lp_team_fc_role", lang=lang) }}</span>
         </div>
       </div>
-      <div style="padding: 1.5rem 1.5rem .5rem; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; background: var(--cream);">{{ trans(key="lp_team_support", lang=lang) }}</div>
-      <div class="team-row single">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/sebastian-civallero.png" alt="Sebastián Civallero"></div>
-          <div class="m-name">Sebastián Civallero</div>
-          <div class="m-role">{{ trans(key="lp_team_sc_role", lang=lang) }}</div>
+      <div class="t-card">
+        <img src="/images/mauro-toscano.png" alt="Mauro Toscano" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Mauro Toscano</span>
+          <span class="t-role">{{ trans(key="lp_team_comite", lang=lang) }}</span>
         </div>
       </div>
-      <div class="team-row single">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/manuel-camejo.png" alt="Manuel Camejo"></div>
-          <div class="m-name">Manuel Camejo</div>
-          <div class="m-role">{{ trans(key="lp_team_mc_role", lang=lang) }}</div>
+      <div class="t-card">
+        <img src="/images/manuel-puebla.jpg" alt="Manuel Puebla" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Manuel Puebla</span>
+          <span class="t-role">{{ trans(key="lp_team_comite", lang=lang) }}</span>
         </div>
       </div>
-      <div class="team-row single">
-        <div class="m-card">
-          <div class="avatar"><img src="/images/brenda-falvo.jpg" alt="Brenda Falvo"></div>
-          <div class="m-name">Brenda Falvo</div>
-          <div class="m-role">{{ trans(key="lp_team_bf_role", lang=lang) }}</div>
+      <div class="t-card">
+        <img src="/images/martin-mereb.jpg" alt="Martín Mereb" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Martín Mereb</span>
+          <span class="t-role">{{ trans(key="lp_team_comite", lang=lang) }}</span>
+        </div>
+      </div>
+      <div class="t-card">
+        <img src="/images/diego-garbervetsky.jpg" alt="Diego Garbervetsky" width="52" height="52" loading="lazy">
+        <div class="t-meta">
+          <span class="t-name">Diego Garbervetsky</span>
+          <span class="t-role">{{ trans(key="lp_team_comite", lang=lang) }}</span>
         </div>
       </div>
     </div>
+
+    <div class="support-block">
+      <span class="support-label">{{ trans(key="lp_team_support", lang=lang) }}</span>
+      <div class="team-grid">
+        <div class="t-card">
+          <img src="/images/sebastian-civallero.png" alt="Sebastián Civallero" width="52" height="52" loading="lazy">
+          <div class="t-meta">
+            <span class="t-name">Sebastián Civallero</span>
+            <span class="t-role">{{ trans(key="lp_team_sc_role", lang=lang) }}</span>
+          </div>
+        </div>
+        <div class="t-card">
+          <img src="/images/manuel-camejo.png" alt="Manuel Camejo" width="52" height="52" loading="lazy">
+          <div class="t-meta">
+            <span class="t-name">Manuel Camejo</span>
+            <span class="t-role">{{ trans(key="lp_team_mc_role", lang=lang) }}</span>
+          </div>
+        </div>
+        <div class="t-card">
+          <img src="/images/brenda-falvo.jpg" alt="Brenda Falvo" width="52" height="52" loading="lazy">
+          <div class="t-meta">
+            <span class="t-name">Brenda Falvo</span>
+            <span class="t-role">{{ trans(key="lp_team_bf_role", lang=lang) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ══ BLOG ═══════════════════════════════════════════════════ -->
+<section id="blog" class="band">
+  <div class="wrap blog-stack">
 
-<!-- ══ NEWS ══════════════════════════════════════════════════ -->
-<section id="news" class="section">
-  <div class="container">
-    <div class="row-head">
-      <div>
-        <div class="eyebrow accent">Blog</div>
-        <h2 class="display" style="margin-bottom:0;">{{ trans(key="lp_news_title", lang=lang) }}</h2>
+    <div class="blog-head">
+      <div class="blog-head-left">
+        <span class="eyebrow accent">Blog</span>
+        <h2 class="display">{{ trans(key="lp_news_title", lang=lang) }}</h2>
       </div>
-      <a href="{{ get_url(path='blog', lang=lang) }}" class="see-all">{{ trans(key="lp_news_see_all", lang=lang) }} &rarr;</a>
+      <a href="{{ get_url(path='blog', lang=lang) }}" class="mono-link">{{ trans(key="lp_news_see_all", lang=lang) }} &rarr;</a>
     </div>
 
     {% set blog_section = get_section(path="blog/_index.md", lang=lang) %}
@@ -760,138 +822,65 @@
     <div class="news-grid">
       {% for post in blog_section.pages %}{%- if loop.index0 < 3 %}
       <a href="{{ post.permalink }}" class="n-card">
-        <div class="n-date">{{ post.date | date(format="%d %b %Y") }}</div>
-        <div class="n-title">{{ post.title }}</div>
+        <span class="n-date">{{ post.date | date(format="%d %b %Y") }}</span>
+        <h3 class="n-title">{{ post.title }}</h3>
         {% if post.description %}
-        <div class="n-excerpt">{{ post.description }}</div>
+        <p class="n-excerpt">{{ post.description }}</p>
         {% endif %}
         <span class="n-arrow">&rarr;</span>
       </a>
       {%- endif %}{% endfor %}
     </div>
     {% endif %}
+
   </div>
 </section>
 
-<!-- ══ CTA STRIP ══════════════════════════════════════════════ -->
-<section id="cta-strip">
-  <div class="container" style="max-width:680px; text-align:center;">
-    <h2 class="cta-h">{{ trans(key="lp_cta_title", lang=lang) | safe }}</h2>
-    <p class="cta-sub">{{ trans(key="lp_cta_subtitle", lang=lang) }}</p>
-    <a href="mailto:centro.criptografia@uba.ar" class="btn-cream">centro.criptografia@uba.ar</a>
+<!-- ══ CONTACT ════════════════════════════════════════════════ -->
+<section id="contact" class="band-dark">
+  <div class="contact-inner">
+    <h2 class="contact-h">{{ trans(key="lp_cta_title", lang=lang) | safe }}</h2>
+    <p class="contact-lead">{{ trans(key="lp_cta_subtitle", lang=lang) }}</p>
+    <a href="mailto:centro.criptografia@uba.ar" class="btn-paper">centro.criptografia@uba.ar</a>
   </div>
 </section>
 
-<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
-<footer id="contact">
-  <div class="footer-inner">
-    <div>
-      <img src="/images/ccsd-logo.png" alt="CCSD" style="max-width:200px; height:auto; filter:invert(1); opacity:.85; margin-bottom:.5rem;">
-      <div class="footer-brand">
-        <small>{{ trans(key="lp_footer_brand", lang=lang) }}</small>
+<!-- ══ FOOTER ═════════════════════════════════════════════════ -->
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <div class="foot-left">
+      <div class="brand">
+        <span class="brand-mark">C</span>
+        <span class="brand-name">CCSD</span>
       </div>
+      <p class="foot-brand">{{ trans(key="lp_footer_brand", lang=lang) }}</p>
+      <span class="foot-copy">© 2026 CCSD — UBA</span>
     </div>
-    <div class="footer-links">
+    <div class="foot-links">
       <a href="#about">{{ trans(key="lp_nav_about", lang=lang) }}</a>
       <a href="#research">{{ trans(key="lp_nav_research", lang=lang) }}</a>
       <a href="#team">{{ trans(key="lp_nav_team", lang=lang) }}</a>
-      <a href="https://ccsd.uba.ar/" target="_blank">{{ trans(key="lp_footer_official", lang=lang) }}</a>
+      <a href="{{ get_url(path='blog', lang=lang) }}">Blog</a>
       <a href="mailto:centro.criptografia@uba.ar">{{ trans(key="lp_nav_contact", lang=lang) }}</a>
     </div>
-    <div class="footer-copy">© 2025 CCSD — UBA</div>
   </div>
 </footer>
 
 <!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
 <script>
-/* Navbar scroll */
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 20);
-});
-
-/* Mobile menu toggle */
+/* Menú mobile: lo único con estado en la página. */
 (function () {
   const toggle = document.getElementById('nav-toggle');
-  const menu = document.getElementById('nav-menu');
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('active');
-    menu.classList.toggle('open');
-  });
-  menu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      toggle.classList.remove('active');
-      menu.classList.remove('open');
-    });
-  });
-})();
+  const menu   = document.getElementById('nav-menu');
+  if (!toggle || !menu) return;
 
-/* Canvas de red */
-(function () {
-  const canvas = document.getElementById('hero-canvas');
-  const ctx    = canvas.getContext('2d');
-  let nodes    = [];
-
-  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-
-  function init() {
-    nodes = [];
-    const count = Math.floor((canvas.width * canvas.height) / 16000);
-    for (let i = 0; i < count; i++) {
-      nodes.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - .5) * .38, vy: (Math.random() - .5) * .38, r: Math.random() * 1.8 + 1 });
-    }
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const n of nodes) {
-      n.x += n.vx; n.y += n.vy;
-      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
-      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-    }
-    const maxDist = 145;
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < maxDist) {
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(74,104,39,${(1 - dist / maxDist) * .45})`;
-          ctx.lineWidth = .8;
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    for (const n of nodes) {
-      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(74,104,39,.55)'; ctx.fill();
-    }
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', () => { resize(); init(); });
-  resize(); init(); draw();
-})();
-
-/* Contadores */
-(function () {
-  let fired = false;
-  const obs = new IntersectionObserver(entries => {
-    if (fired || !entries[0].isIntersecting) return;
-    fired = true;
-    document.querySelectorAll('[data-target]').forEach(el => {
-      const target = +el.dataset.target;
-      let val = 0;
-      const step = Math.max(target / 44, 0.05);
-      const iv = setInterval(() => {
-        val = Math.min(val + step, target);
-        el.textContent = Math.floor(val);
-        if (val >= target) { el.textContent = target; clearInterval(iv); }
-      }, 26);
-    });
-  }, { threshold: .2 });
-  obs.observe(document.getElementById('hero'));
+  toggle.addEventListener('click', () => setOpen(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
 })();
 </script>
 

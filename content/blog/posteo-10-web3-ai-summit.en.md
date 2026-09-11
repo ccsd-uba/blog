@@ -1,12 +1,12 @@
 +++
 title = "Agents, game theory, and quantum computers: the Web3 AI Summit in San Francisco"
-description = "Diego Kingston, CCSD's Scientific Director, took part in the Web3 AI Summit in San Francisco. This edition was dominated by AI agents, agentic payments, game theory applied to models, and the post-quantum transition."
+description = "Diego Kingston, CCSD's Research Director, took part in the Web3 AI Summit in San Francisco. This edition was dominated by AI agents, agentic payments, game theory applied to models, and the post-quantum transition."
 date = 2026-09-11
 [taxonomies]
 tags = ["artificial intelligence", "cryptography", "zk", "conferences", "research"]
 +++
 
-This month, Diego Kingston, Scientific Director of our center, took part in the Web3 AI Summit in San Francisco, as he had in the three previous editions, to talk with researchers and industry leaders about the latest developments in web3 and its intersection with AI. This edition took a different direction from previous years: whereas the focus used to be on digital identity, privacy technologies, and selective disclosure, this time the agenda was dominated by AI agents and the post-quantum transition. This was to be expected, since AI has changed the way we do many things, including programming and searching for information, and it is only natural for the industry to start exploring what happens when agents begin to transact on their own.
+This month, Diego Kingston, Research Director of our center, took part in the Web3 AI Summit in San Francisco, as he had in the three previous editions, to talk with researchers and industry leaders about the latest developments in web3 and its intersection with AI. This edition took a different direction from previous years: whereas the focus used to be on digital identity, privacy technologies, and selective disclosure, this time the agenda was dominated by AI agents and the post-quantum transition. This was to be expected, since AI has changed the way we do many things, including programming and searching for information, and it is only natural for the industry to start exploring what happens when agents begin to transact on their own.
 
 The event ran over two days: the first devoted mostly to AI agents, and the second to zero-knowledge proofs and quantum computing.
 
@@ -34,6 +34,6 @@ Fortunately, Ethereum is already moving in this direction and leading the develo
 
 ## What we take away
 
-Diego, who in addition to leading the center's scientific area works at Aligned, took the opportunity to talk about some of the ideas and products he has been working on there, with this new landscape in mind: AI agents doing commerce and the quantum threat drawing ever closer. Many of those conversations kept coming back to the same point: the need to verify someone else's computation, cheaply and with security that does not expire. At Aligned, work continues on the development of its zkVM (post-quantum secure by design) and on proof aggregation, as well as collaborating to have efficient protocols ready for this next stage.
+Diego, who in addition to leading the center's research area works at Aligned, took the opportunity to talk about some of the ideas and products he has been working on there, with this new landscape in mind: AI agents doing commerce and the quantum threat drawing ever closer. Many of those conversations kept coming back to the same point: the need to verify someone else's computation, cheaply and with security that does not expire. At Aligned, work continues on the development of its zkVM (post-quantum secure by design) and on proof aggregation, as well as collaborating to have efficient protocols ready for this next stage.
 
 For those of us at the center who closely follow the intersection of AI, cryptography, and decentralized systems, the summit leaves a clear picture of where the industry is heading. It was a joy to reconnect with so many colleagues in San Francisco and to see how the ecosystem keeps evolving. Now, back to building.

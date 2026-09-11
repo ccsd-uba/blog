@@ -1,12 +1,12 @@
 +++
 title = "Agentes, teoría de juegos y computadoras cuánticas: así fue el Web3 AI Summit en San Francisco"
-description = "Diego Kingston, director científico del CCSD, participó del Web3 AI Summit en San Francisco. Esta edición estuvo dominada por los agentes de IA, los pagos agénticos, la teoría de juegos aplicada a modelos y la transición post-cuántica."
+description = "Diego Kingston, director de Investigación del CCSD, participó del Web3 AI Summit en San Francisco. Esta edición estuvo dominada por los agentes de IA, los pagos agénticos, la teoría de juegos aplicada a modelos y la transición post-cuántica."
 date = 2026-09-11
 [taxonomies]
 tags = ["inteligencia artificial", "criptografía", "zk", "conferencias", "investigación"]
 +++
 
-Este mes, Diego Kingston, director científico de nuestro centro, participó del Web3 AI Summit en San Francisco, tal como en las tres ediciones anteriores, para conversar con investigadores y líderes de la industria sobre los últimos desarrollos en web3 y su intersección con la IA. Esta edición tomó un rumbo distinto al de años anteriores: mientras que antes el eje estaba puesto en identidad digital, tecnologías de privacidad y selective disclosure, esta vez la agenda estuvo dominada por los agentes de IA y por la transición post-cuántica. Era algo esperable, ya que la IA cambió la forma en que hacemos muchas cosas, incluida la programación y la búsqueda de información, y resulta natural que la industria empiece a explorar qué pasa cuando los agentes comienzan a transaccionar por sí mismos.
+Este mes, Diego Kingston, director de Investigación de nuestro centro, participó del Web3 AI Summit en San Francisco, tal como en las tres ediciones anteriores, para conversar con investigadores y líderes de la industria sobre los últimos desarrollos en web3 y su intersección con la IA. Esta edición tomó un rumbo distinto al de años anteriores: mientras que antes el eje estaba puesto en identidad digital, tecnologías de privacidad y selective disclosure, esta vez la agenda estuvo dominada por los agentes de IA y por la transición post-cuántica. Era algo esperable, ya que la IA cambió la forma en que hacemos muchas cosas, incluida la programación y la búsqueda de información, y resulta natural que la industria empiece a explorar qué pasa cuando los agentes comienzan a transaccionar por sí mismos.
 
 El evento se extendió a lo largo de dos días: el primero, dedicado en su mayoría a agentes de IA, y el segundo, a pruebas de conocimiento cero (zero-knowledge) y computación cuántica.
 
@@ -34,6 +34,6 @@ Por suerte, Ethereum ya se está moviendo en esta dirección y lidera el desarro
 
 ## Qué nos deja esto
 
-Diego, que además de dirigir el área científica del centro trabaja en Aligned, aprovechó el encuentro para conversar sobre algunas de las ideas y productos en los que viene trabajando ahí, pensando en este nuevo escenario, con agentes de IA haciendo comercio y la amenaza cuántica cada vez más cerca. Muchas de esas conversaciones volvían una y otra vez al mismo punto: la necesidad de verificar cómputo ajeno, de forma barata y con una seguridad que no caduque. En Aligned se sigue trabajando en el desarrollo de su zkVM (post-cuántica segura por diseño) y en agregación de pruebas, además de colaborar para tener protocolos eficientes de cara a esta próxima etapa.
+Diego, que además de dirigir el área de Investigación del centro trabaja en Aligned, aprovechó el encuentro para conversar sobre algunas de las ideas y productos en los que viene trabajando ahí, pensando en este nuevo escenario, con agentes de IA haciendo comercio y la amenaza cuántica cada vez más cerca. Muchas de esas conversaciones volvían una y otra vez al mismo punto: la necesidad de verificar cómputo ajeno, de forma barata y con una seguridad que no caduque. En Aligned se sigue trabajando en el desarrollo de su zkVM (post-cuántica segura por diseño) y en agregación de pruebas, además de colaborar para tener protocolos eficientes de cara a esta próxima etapa.
 
 Para quienes en el centro seguimos de cerca la intersección entre IA, criptografía y sistemas descentralizados, el summit deja un panorama claro de hacia dónde se mueve la industria. Fue una alegría reencontrarse con tantos colegas en San Francisco y ver cómo el ecosistema sigue evolucionando. Ahora, a seguir construyendo.

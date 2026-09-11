@@ -6,6 +6,8 @@ date = 2026-09-11
 tags = ["artificial intelligence", "cryptography", "zk", "conferences", "research"]
 +++
 
+![Diego Kingston on the Stanford University campus, during his trip to the Web3 AI Summit](/images/web3-ai-summit-2026.jpg)
+
 This month, Diego Kingston, Research Director of our center, took part in the Web3 AI Summit in San Francisco, as he had in the three previous editions, to talk with researchers and industry leaders about the latest developments in web3 and its intersection with AI. This edition took a different direction from previous years: whereas the focus used to be on digital identity, privacy technologies, and selective disclosure, this time the agenda was dominated by AI agents and the post-quantum transition. This was to be expected, since AI has changed the way we do many things, including programming and searching for information, and it is only natural for the industry to start exploring what happens when agents begin to transact on their own.
 
 The event ran over two days: the first devoted mostly to AI agents, and the second to zero-knowledge proofs and quantum computing.

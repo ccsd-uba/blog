@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   build:
@@ -18,16 +19,21 @@ jobs:
         with:
           tool: zola@0.23.4
 
+      - name: Check
+        run: zola check --skip-external-links
+
       - name: Build
         run: zola build
 
       - name: Upload artifact
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
   deploy:
     needs: build
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       pages: write

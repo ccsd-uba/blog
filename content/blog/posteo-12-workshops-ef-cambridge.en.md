@@ -30,7 +30,7 @@ The work was organized into four workshops:
 
 A theme that ran through several talks was the use of AI agents to optimize cryptographic implementations. The shared conclusion is that those optimizations can only be trusted if they are backed by clear, formally verified specifications.
 
-![A speaker at a lectern bearing the Jesus College crest during one of the talks](/images/ef-cambridge-charla.jpg)
+![Pablo Deymonnaz at a lectern bearing the Jesus College crest during one of the talks](/images/ef-cambridge-charla.jpg)
 
 ## What we take away
 

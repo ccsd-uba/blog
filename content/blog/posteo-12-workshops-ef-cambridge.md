@@ -30,7 +30,7 @@ El trabajo se organizó en cuatro workshops:
 
 Un tema que atravesó varias charlas fue el uso de agentes de IA para optimizar implementaciones criptográficas. La conclusión compartida es que esas optimizaciones solo son confiables si están respaldadas por especificaciones claras y verificadas formalmente.
 
-![Un expositor en un atril con el escudo del Jesus College durante una de las charlas](/images/ef-cambridge-charla.jpg)
+![Pablo Deymonnaz en un atril con el escudo del Jesus College durante una de las charlas](/images/ef-cambridge-charla.jpg)
 
 ## Lo que nos llevamos
 

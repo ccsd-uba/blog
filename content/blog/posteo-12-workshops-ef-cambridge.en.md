@@ -9,6 +9,8 @@ tags = ["post-quantum cryptography", "formal verification", "events"]
 
 From October 10 to 15, Pablo Deymonnaz (CCSD Director), Diego Kingston (Scientific Director), Federico Carrone (Director of the Academic Committee), and Manuel Puebla and Mauro Toscano (Academic Committee) took part in a series of workshops in Cambridge organized by the Ethereum Foundation. The gathering brought together more than 120 researchers and engineers.
 
+![Six people posing on the lawn of a courtyard in front of a stone building at Jesus College, Cambridge](/images/ef-cambridge-grupo.jpg)
+
 ## The context
 
 Much of the cryptography that protects today's communications and digital systems could become vulnerable once quantum computers arrive. No one knows for sure when that will happen, but over the past year the discussion has grown more urgent: a paper by Google showed that breaking certain cryptographic schemes requires fewer resources than previously estimated.
@@ -16,6 +18,8 @@ Much of the cryptography that protects today's communications and digital system
 Add to this artificial intelligence. New models have accelerated research in many areas, including the search for weaknesses in cryptographic tools. That makes it all the more important to review systems more rigorously, to try to attack them before others do, and to replace their components with quantum-resistant alternatives.
 
 ## One week, four topics
+
+![A Jesus College Cambridge sign pointing the way to the "Cambridge post-quantum workshop" in Elena Hall, Sibilla Room](/images/ef-cambridge-cartel.jpg)
 
 The work was organized into four workshops:
 
@@ -25,6 +29,8 @@ The work was organized into four workshops:
 - **Hash functions and cryptanalysis:** which hash functions are worth adopting and how resistant they are, even against AI-assisted attack attempts.
 
 A theme that ran through several talks was the use of AI agents to optimize cryptographic implementations. The shared conclusion is that those optimizations can only be trusted if they are backed by clear, formally verified specifications.
+
+![Pablo Deymonnaz at a lectern bearing the Jesus College crest during one of the talks](/images/ef-cambridge-charla.jpg)
 
 ## What we take away
 
